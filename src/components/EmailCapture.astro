@@ -1,0 +1,58 @@
+---
+/*
+  Email capture — ships in Phase 1 (NOTES.md §7).
+
+  TODO: no provider picked yet (NOTES.md §11 Q15 — Buttondown / Kit / Resend).
+  Set ACTION to the provider's form endpoint and the field name it expects.
+  Until then the form is inert and says so, rather than silently dropping
+  addresses on the floor.
+*/
+const ACTION = '';
+const configured = ACTION.length > 0;
+---
+
+<section class="rounded-xl border border-rule bg-paper-raised p-7 sm:p-9">
+  <h2 class="text-2xl text-ink">Get the next one</h2>
+  <p class="mt-2 max-w-prose text-[0.9375rem] leading-relaxed text-ink-soft">
+    A note when a new game or map goes up, and when something interesting turns up in
+    the data. No more than that.
+  </p>
+
+  <form
+    action={ACTION}
+    method="post"
+    class="mt-5 flex max-w-md flex-col gap-3 sm:flex-row"
+    data-configured={String(configured)}
+  >
+    <label for="email" class="sr-only">Email address</label>
+    <input
+      id="email"
+      type="email"
+      name="email"
+      required
+      disabled={!configured}
+      placeholder="you@example.com"
+      class="min-w-0 flex-1 rounded-lg border border-rule-strong bg-paper px-3.5 py-2.5 text-[0.9375rem] text-ink placeholder:text-ink-muted focus:border-accent focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"
+    />
+    <button
+      type="submit"
+      disabled={!configured}
+      class="rounded-lg bg-accent px-5 py-2.5 text-[0.9375rem] font-medium text-paper transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+    >
+      Subscribe
+    </button>
+  </form>
+
+  {
+    !configured && (
+      <p class="mt-3 text-xs text-ink-muted">
+        Not wired up yet — needs an email provider (see <code>EmailCapture.astro</code>
+        ).
+      </p>
+    )
+  }
+
+  <p class="mt-3 text-xs text-ink-muted">
+    Address only, unsubscribe any time. <a href="/privacy" class="underline">Privacy</a>.
+  </p>
+</section>

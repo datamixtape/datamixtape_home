@@ -1,0 +1,75 @@
+---
+import { STATUS_LABEL, type Project } from '../data/projects';
+
+interface Props {
+  project: Project;
+  /** Section pages show the longer pitch; the home mosaic shows the blurb. */
+  detailed?: boolean;
+}
+
+const { project, detailed = false } = Astro.props;
+const { name, blurb, pitch, status, href, accent, tint } = project;
+
+const live = status === 'live';
+const Tag = live ? 'a' : 'div';
+---
+
+<Tag
+  href={live ? href : undefined}
+  target={live ? '_blank' : undefined}
+  rel={live ? 'noopener' : undefined}
+  class:list={[
+    'group relative flex flex-col overflow-hidden rounded-xl border p-6 sm:p-7',
+    live ? 'transition-shadow hover:shadow-[0_2px_18px_rgba(28,26,23,0.09)]' : '',
+  ]}
+  style={`background:${tint};border-color:color-mix(in srgb, ${accent} 22%, transparent)`}
+>
+  <span
+    class="absolute inset-x-0 top-0 h-[3px]"
+    style={`background:${accent}`}
+    aria-hidden="true"></span>
+
+  <div class="flex items-center gap-3">
+    <span
+      class="inline-block size-2 shrink-0 rounded-full"
+      style={`background:${accent}`}
+      aria-hidden="true"></span>
+    <span
+      class="text-[0.6875rem] font-medium tracking-[0.09em] uppercase"
+      style={`color:${accent}`}
+    >
+      {STATUS_LABEL[status]}
+    </span>
+  </div>
+
+  <h3 class="mt-3 text-2xl text-ink">{name}</h3>
+
+  <p class="mt-2 flex-1 text-[0.9375rem] leading-relaxed text-ink-soft">
+    {detailed ? pitch : blurb}
+  </p>
+
+  {
+    live && (
+      <span
+        class="mt-5 inline-flex items-center gap-1.5 text-sm font-medium"
+        style={`color:${accent}`}
+      >
+        Open
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 16 16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="transition-transform group-hover:translate-x-0.5"
+          aria-hidden="true"
+        >
+          <path d="M3 8h10M9 4l4 4-4 4" />
+        </svg>
+      </span>
+    )
+  }
+</Tag>

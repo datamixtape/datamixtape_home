@@ -1,0 +1,29 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import {
+  SECTIONS,
+  bySection,
+  type ProjectSection,
+} from '../data/projects';
+
+// One route per key in SECTIONS. Adding a section needs no new file.
+export const getStaticPaths = (() =>
+  Object.keys(SECTIONS).map((section) => ({ params: { section } }))) satisfies GetStaticPaths;
+
+const section = Astro.params.section as ProjectSection;
+const { heading, intro, meta } = SECTIONS[section];
+const items = bySection(section);
+---
+
+<Base title={heading} description={meta}>
+  <section class="wrap pt-14 pb-10 sm:pt-20">
+    <h1 class="text-[2.25rem] sm:text-[3rem]">{heading}</h1>
+    <p class="mt-5 max-w-xl text-lg leading-relaxed text-ink-soft">{intro}</p>
+  </section>
+
+  <div class="wrap grid gap-5 sm:grid-cols-2">
+    {items.map((project) => <ProjectCard project={project} detailed />)}
+  </div>
+</Base>

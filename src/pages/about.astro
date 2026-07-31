@@ -1,0 +1,80 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE_NAME, CONTACT_EMAIL } from '../config';
+---
+
+<Base
+  title="About"
+  description="What this site is, how the things on it are built, and what they can't tell you."
+>
+  <article class="pt-14 pb-8 sm:pt-20">
+    <header class="wrap-prose">
+      <h1 class="text-[2.25rem] sm:text-[3rem]">About</h1>
+      <p class="mt-5 text-lg leading-relaxed text-ink-soft">
+        A statement of method, which is more useful than a biography.
+      </p>
+      <hr class="mt-8 border-rule" />
+    </header>
+
+    <div class="wrap-prose prose-note mt-8">
+      <p>
+        {SITE_NAME} is a small collection of interactive things built out of public data:
+        two games, a few maps, and notes about both. There is no organization behind it
+        and nothing is for sale.
+      </p>
+
+      <h2>The idea most of it runs on</h2>
+
+      <p>
+        People are certain they can evaluate things they are actually just recognizing.
+        A draft prospect from a blue-blood program looks better than the identical
+        prospect from a mid-major. A film with a famous name attached looks like a safer
+        bet than the same film without one. The reputation arrives before the evidence
+        and quietly does most of the work.
+      </p>
+
+      <p>
+        So the games take the reputation away. You get the production, the
+        measurements, the budget, the schedule — everything except the part you were
+        going to lean on — and you have to commit. Then the names go back on and you
+        find out what you did. It is not a trick question and there is no lesson at the
+        end. It's just interesting to find out how much of your judgment was judgment.
+      </p>
+
+      <h2>What the maps are for</h2>
+
+      <p>
+        The rest is money, arranged in a way it usually isn't. College sports money
+        counted by where players are from instead of where they play. Political money
+        counted by what donors do for a living instead of which party they gave to.
+        Nothing here is leaked or scraped from anywhere it shouldn't be — it's all
+        filings and public records. The work is in the arranging.
+      </p>
+
+      <h2>On being wrong</h2>
+
+      <p>
+        Everything here is built from data that was assembled by someone, which means
+        it inherits every judgment call they made and adds a few more. Names get
+        matched across sources that spell them differently. Categories get collapsed.
+        Records go missing in ways that aren't random.
+      </p>
+
+      <p>
+        The response is not to pretend otherwise. Every tool that makes a claim gets a
+        <a href="/blog">method note</a> explaining how the numbers were made and where
+        they are weakest, and anything about money or politics gets that treatment
+        before it goes up, not after somebody asks. If you find something broken, that
+        is genuinely useful — <a href={`mailto:${CONTACT_EMAIL}`}>say so</a>.
+      </p>
+
+      <h2>How it's built</h2>
+
+      <p>
+        Python for the data pipelines, whatever fits for the front ends, static hosting
+        throughout. No accounts, no logins, nothing stored about you. The
+        <a href="/blog">notes</a> get into the parts that were harder than they looked.
+      </p>
+    </div>
+  </article>
+</Base>

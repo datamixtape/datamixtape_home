@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import EmailCapture from '../../components/EmailCapture.astro';
+import { getPosts } from '../../lib/posts';
+import { POST_KINDS } from '../../content.config';
+
+const posts = await getPosts();
+---
+
+<Base
+  title="Blog"
+  description="Findings, methods, and build notes from the games and maps."
+>
+  <section class="wrap pt-14 pb-10 sm:pt-20">
+    <h1 class="text-[2.25rem] sm:text-[3rem]">Blog</h1>
+    <p class="mt-5 max-w-xl text-lg leading-relaxed text-ink-soft">
+      Three kinds of post, labeled so you can skip the ones that aren't for you.
+      <strong class="font-medium text-ink">Findings</strong> are the interesting thing
+      the data turned out to be hiding.
+      <strong class="font-medium text-ink">Methods</strong> are how it was built and where
+      it could be wrong. <strong class="font-medium text-ink">Notes</strong> are everything
+      else.
+    </p>
+
+    <div class="mt-6 flex flex-wrap gap-2">
+      {
+        POST_KINDS.map((kind) => (
+          <span class="rounded-full border border-rule-strong px-2.5 py-1 text-xs text-ink-muted">
+            {kind} · {posts.filter((p) => p.data.kind === kind).length}
+          </span>
+        ))
+      }
+    </div>
+  </section>
+
+  <div class="wrap">
+    {
+      posts.length === 0 ? (
+        <p class="border-t border-rule py-10 text-ink-muted">Nothing published yet.</p>
+      ) : (
+        posts.map((post) => <PostCard slug={post.id} {...post.data} />)
+      )
+    }
+  </div>
+
+  <div class="wrap mt-16">
+    <EmailCapture />
+  </div>
+</Base>

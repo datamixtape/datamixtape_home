@@ -1,0 +1,19 @@
+---
+title: Example draft post
+description: >-
+  Not published. Demonstrates the frontmatter every post needs; delete once
+  there are real posts in the queue.
+date: 2026-07-30
+kind: Method
+draft: true
+---
+
+`draft: true` keeps a post out of the build, out of the listing, and out of the RSS
+feed. Flip it to `false` (or delete the line) to publish.
+
+Required frontmatter: `title`, `description`, `date`, `kind`. Optional: `project`
+(a slug from `src/data/projects.ts`, which links the post to that tool) and
+`draft`.
+
+`kind` must be one of **Finding**, **Method**, or **Notes** — the build fails
+otherwise, which is the point.

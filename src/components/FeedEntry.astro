@@ -1,0 +1,108 @@
+---
+import { STATUS_LABEL, SECTIONS, type Project } from '../data/projects';
+import { formatDate } from '../lib/posts';
+import type { FeedEntry } from '../lib/feed';
+
+interface Props {
+  entry: FeedEntry;
+}
+
+const { entry } = Astro.props;
+const { date } = entry;
+
+/*
+  One row per thing that shipped. Deliberately light — the feed has to stay
+  readable at one new entry a week, so projects get a colored kicker rather
+  than a full tinted card. The heavier cards live on the section pages.
+*/
+const project: Project | null = entry.kind === 'project' ? entry.project : null;
+const live = project?.status === 'live';
+
+const href = project
+  ? live
+    ? project.href
+    : `/${project.section}`
+  : `/blog/${entry.post.id}`;
+
+const title = project ? project.name : entry.post.data.title;
+const body = project ? project.blurb : entry.post.data.description;
+const external = Boolean(project && live);
+---
+
+<article
+  class="group relative border-b border-rule py-8 pl-5 first:pt-0"
+  style={project ? `--dot:${project.accent}` : undefined}
+>
+  {
+    project && (
+      <span
+        class="absolute top-8 bottom-8 left-0 w-[3px] rounded-full group-first:top-0"
+        style={`background:${project.accent}`}
+        aria-hidden="true"
+      />
+    )
+  }
+
+  <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
+    {
+      project ? (
+        <>
+          <span class="font-medium tracking-wide" style={`color:${project.accent}`}>
+            {SECTIONS[project.section].heading} · {project.topic}
+          </span>
+          {!live && (
+            <span class="rounded-full border border-rule-strong px-2 py-0.5 text-ink-muted">
+              {STATUS_LABEL[project.status]}
+            </span>
+          )}
+        </>
+      ) : (
+        <span class="rounded-full border border-rule-strong px-2 py-0.5 font-medium tracking-wide text-ink-soft">
+          {entry.post.data.kind}
+        </span>
+      )
+    }
+    <time datetime={date.toISOString()} class="text-ink-muted">{formatDate(date)}</time>
+  </div>
+
+  <h3 class:list={['mt-2 leading-snug', project ? 'text-[1.75rem]' : 'text-[1.35rem]']}>
+    <a
+      href={href}
+      target={external ? '_blank' : undefined}
+      rel={external ? 'noopener' : undefined}
+      class="text-ink hover:text-accent"
+    >
+      {title}
+      <span class="absolute inset-0" aria-hidden="true"></span>
+    </a>
+  </h3>
+
+  <p class="mt-1.5 max-w-prose text-[0.9375rem] leading-relaxed text-ink-soft">
+    {body}
+  </p>
+
+  {
+    live && (
+      <span
+        class="mt-3 inline-flex items-center gap-1.5 text-sm font-medium"
+        style={`color:${project!.accent}`}
+      >
+        Open
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 16 16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="transition-transform group-hover:translate-x-0.5"
+          aria-hidden="true"
+        >
+          <path d="M3 8h10M9 4l4 4-4 4" />
+        </svg>
+      </span>
+    )
+  }
+</article>

@@ -1,0 +1,165 @@
+@import 'tailwindcss';
+
+@import '@fontsource-variable/fraunces';
+@import '@fontsource-variable/inter';
+
+/*
+  Site tier only (NOTES.md §5). Tools keep their own palettes; this is the
+  chrome that wraps them. Warm paper, near-black warm ink, one restrained
+  accent. Light only.
+*/
+@theme {
+  --font-display: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Inter Variable', system-ui, -apple-system, sans-serif;
+
+  --color-paper: #faf8f4;
+  --color-paper-raised: #fffdfa;
+  --color-ink: #1c1a17;
+  --color-ink-soft: #4a453e;
+  --color-ink-muted: #7d766c;
+  --color-rule: #e5e0d6;
+  --color-rule-strong: #d3ccbe;
+  --color-accent: #b04a2f;
+  --color-accent-soft: #f3e6e0;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: 'tnum' 1, 'cv05' 1;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 40;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--color-accent-soft);
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@utility wrap {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 68rem;
+  padding-inline: 1.5rem;
+}
+
+/*
+  Reading column. Shares `wrap`'s outer gutter so the text lines up with the
+  wordmark, then caps each child at reading width — left-aligned, not centered
+  in the viewport. Children opt out with `max-w-none`.
+*/
+@utility wrap-prose {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 68rem;
+  padding-inline: 1.5rem;
+}
+
+.wrap-prose > *:not(.max-w-none) {
+  max-width: 42rem;
+}
+
+/* Long-form post body. Kept here so MDX needs no per-file classes. */
+.prose-note {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--color-ink-soft);
+}
+.prose-note > * + * {
+  margin-top: 1.25em;
+}
+.prose-note h2 {
+  margin-top: 2.25em;
+  font-size: 1.5rem;
+  color: var(--color-ink);
+}
+.prose-note h3 {
+  margin-top: 1.75em;
+  font-size: 1.2rem;
+  color: var(--color-ink);
+}
+.prose-note a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+.prose-note strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+.prose-note ul,
+.prose-note ol {
+  padding-left: 1.35em;
+}
+.prose-note ul {
+  list-style: disc;
+}
+.prose-note ol {
+  list-style: decimal;
+}
+.prose-note li + li {
+  margin-top: 0.4em;
+}
+.prose-note blockquote {
+  border-left: 2px solid var(--color-rule-strong);
+  padding-left: 1.15em;
+  font-style: italic;
+}
+.prose-note code {
+  font-size: 0.9em;
+  background: #f0ece3;
+  padding: 0.12em 0.35em;
+  border-radius: 3px;
+}
+.prose-note pre {
+  background: #f0ece3;
+  padding: 1rem 1.15rem;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+.prose-note pre code {
+  background: none;
+  padding: 0;
+}
+.prose-note hr {
+  border: 0;
+  border-top: 1px solid var(--color-rule);
+  margin-block: 2.5em;
+}
+.prose-note table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+.prose-note th,
+.prose-note td {
+  border-bottom: 1px solid var(--color-rule);
+  padding: 0.5em 0.6em;
+  text-align: left;
+}
