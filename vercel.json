@@ -2,6 +2,5 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
-  "comment": "Phase 2 (NOTES.md §4B) adds path rewrites here so the tools live on this domain. Kept commented-out below rather than active, because turning them on requires a base-path change in the Blind Board first.",
   "rewrites": []
 }
