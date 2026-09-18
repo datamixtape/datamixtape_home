@@ -1,7 +1,7 @@
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
 import { getPosts } from '../lib/posts';
-import { SITE_NAME, SITE_DESCRIPTION } from '../config';
+import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from '../config';
 
 export async function GET(context: APIContext) {
   const posts = await getPosts();
@@ -9,7 +9,7 @@ export async function GET(context: APIContext) {
   return rss({
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
-    site: context.site ?? 'https://example.com',
+    site: context.site ?? SITE_URL,
     items: posts.map((post) => ({
       title: post.data.title,
       description: post.data.description,

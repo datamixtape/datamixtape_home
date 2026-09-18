@@ -1,21 +1,15 @@
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- *  SITE NAME IS A PLACEHOLDER.
- *
- *  Everything user-visible derives from the four constants below. To rename the
- *  site, change them here and nothing else — no component hardcodes the name.
- *  `SITE_URL` also needs updating once a domain is bought (it feeds RSS,
- *  the sitemap, and canonical/OG tags).
+ *  Everything user-visible derives from the constants below. No component
+ *  hardcodes the name — renaming the site is this file and nothing else.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /**
- * Shortlist (both `.com` open as of 2026-07-31, unconfirmed at a registrar):
- *   · Roughly Precise      ← currently set
- *   · Directionally True
- * Nothing is decided. Swap the string and the whole site follows.
+ * Displayed with a space; the domain has none (see AGENTS.md on the hyphen
+ * question). Decided 2026-08-06; `datamixtape.com` registered the same day.
  */
-export const SITE_NAME = 'Roughly Precise';
+export const SITE_NAME = 'Data Mixtape';
 
 /** Shown under the wordmark on the home page. */
 export const SITE_TAGLINE = 'Games and maps built out of real numbers.';
@@ -25,11 +19,18 @@ export const SITE_DESCRIPTION =
   'Interactive games and data tools about sports, money, film, and politics — ' +
   'plus notes on how they were built and what turned up along the way.';
 
-/** PLACEHOLDER. Must be the real domain before deploy: RSS/sitemap/OG depend on it. */
-export const SITE_URL = 'https://example.com';
+/**
+ * Feeds RSS, the sitemap, and canonical/OG tags. No trailing slash.
+ * Registered 2026-08-06. This is the canonical host — any other domain pointed
+ * at the site must 301 here rather than serve a copy.
+ */
+export const SITE_URL = 'https://datamixtape.com';
 
-/** Contact alias — never the personal gmail (see NOTES.md §3). */
-export const CONTACT_EMAIL = 'hello@example.com';
+/**
+ * Contact alias — never the personal gmail (see NOTES.md §3).
+ * ⚠️ Doesn't route yet; needs forwarding set up on the domain.
+ */
+export const CONTACT_EMAIL = 'hello@datamixtape.com';
 
 /**
  * Nav labels are free text — renaming one changes it everywhere (header, footer,

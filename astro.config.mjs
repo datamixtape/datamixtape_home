@@ -9,8 +9,8 @@ import { SITE_URL } from './src/config';
 
 // https://astro.build/config
 export default defineConfig({
-  // PLACEHOLDER domain — lives in src/config.ts. Sitemap, RSS, and canonical
-  // URLs all read from it, so it must be real before the first deploy.
+  // Domain lives in src/config.ts. Sitemap, RSS, and canonical URLs all read
+  // from it — it must be registered before the first deploy.
   site: SITE_URL,
 
   vite: {

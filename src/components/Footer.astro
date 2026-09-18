@@ -1,5 +1,6 @@
 ---
 import { SITE_NAME, NAV, CONTACT_EMAIL } from '../config';
+import Logo from './Logo.astro';
 const year = new Date().getFullYear();
 ---
 
@@ -7,7 +8,10 @@ const year = new Date().getFullYear();
   <div
     class="wrap flex flex-col gap-6 py-10 text-sm text-ink-muted sm:flex-row sm:items-center sm:justify-between"
   >
-    <p>&copy; {year} {SITE_NAME}</p>
+    <p class="flex items-center gap-2">
+      <Logo size={20} />
+      &copy; {year} {SITE_NAME}
+    </p>
 
     <nav class="flex flex-wrap items-center gap-x-5 gap-y-2">
       {NAV.map(({ label, href }) => <a href={href} class="hover:text-ink">{label}</a>)}

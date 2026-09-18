@@ -13,17 +13,29 @@ npm run build    # → dist/
 npm run preview
 ```
 
-## ⚠️ The name is a placeholder
+## The name: Data Mixtape — `datamixtape.com` (registered 2026-08-06)
 
-`Roughly Precise` is a stand-in, not a decision. **Every user-visible string
-derives from `src/config.ts`** — `SITE_NAME`, `SITE_TAGLINE`,
-`SITE_DESCRIPTION`, `SITE_URL`, `CONTACT_EMAIL`. No component hardcodes any of
-them. Renaming the site is one file.
+Displayed as **Data Mixtape** with a space; the domain has none — `SITE_NAME` and
+`SITE_URL` are separate strings on purpose, so the wordmark stays readable while
+the URL stays sayable. No hyphen: the run-together form has no bad second reading,
+and "hyphen" is dead weight every time you say the address aloud.
 
-Two things that also need the real name before deploy:
-- `SITE_URL` — feeds RSS, sitemap, canonical + OG tags. Currently `example.com`.
-- `CONTACT_EMAIL` — must be an alias, never the personal gmail (NOTES.md §3).
-- `public/favicon.svg` — placeholder mark (a point inside its error bar).
+`dataremix.com` was the pick first and turned out to be **registered but parked**
+— no NS, no SOA, no A record, so a DNS check reads it as free. **The DNS
+availability check is reliable for "taken," not for "free."** Always confirm at a
+registrar.
+
+**Every user-visible string derives from `src/config.ts`** — `SITE_NAME`,
+`SITE_TAGLINE`, `SITE_DESCRIPTION`, `SITE_URL`, `CONTACT_EMAIL`. No component
+hardcodes any of them.
+
+Still open on the name:
+- `public/favicon.svg` is a leftover mark from an older name (a point inside its
+  error bar). It means nothing now — a cassette is the obvious replacement.
+- `CONTACT_EMAIL` is `hello@datamixtape.com` and doesn't route yet.
+- Unregistered and worth grabbing as 301 redirects: `datamixtapes.com` (the
+  likely typo), `data-mixtape.com`. One Vercel project, multiple domains, one
+  canonical — never mirror content on two hostnames without a redirect.
 
 ## Layout
 
@@ -104,12 +116,27 @@ console errors, fonts self-hosted (no third-party requests).
 
 ## Next, in order
 
-1. **Pick the name + buy the domain.** Blocks everything below. Update
-   `src/config.ts`, then rename this folder off `data_viz_main_site`.
+1. ~~**Pick the name + buy the domain**~~ — done, **Data Mixtape** /
+   `datamixtape.com`, registered 2026-08-06.
+   **Remaining: rename this folder off `data_viz_main_site`.**
 2. **Email provider** (NOTES.md §11 Q15). `EmailCapture.astro` is inert and says
    so on the page — set `ACTION` to the provider endpoint to switch it on.
-3. **git init**, and *set the commit name + noreply email before the first push*
-   (NOTES.md §3 — pseudonym decision).
+3. ~~**git init**~~ — done, `main`, one commit, nothing pushed anywhere.
+   ⚠️ **The commit identity is a placeholder and must be fixed before the first
+   push** (NOTES.md §3 — pseudonym decision). Currently, set `--local` only:
+   `Data Mixtape <placeholder@users.noreply.github.com>`. Once the
+   pseudonymous GitHub account exists, take the real
+   `<id>+<username>@users.noreply.github.com` from GitHub → Settings → Emails,
+   then rewrite every existing commit:
+
+   ```bash
+   git config --local user.name "<pseudonym>"
+   git config --local user.email "<id>+<username>@users.noreply.github.com"
+   git rebase -r --root --exec 'git commit --amend --no-edit --reset-author'
+   ```
+
+   Cheap now, unpleasant after the history grows. Creating the GitHub account is
+   a manual step — Claude can't create accounts.
 4. **Deploy to Vercel.** `vercel.json` is in place (`cleanUrls`, empty rewrites).
 5. **Correct the `added` dates** in `data/projects.ts` (four of five are guesses).
 6. **Real screenshots on the project cards** — currently text-only.

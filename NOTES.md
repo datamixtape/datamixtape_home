@@ -9,8 +9,8 @@ home mosaic, Games / Data Exploration / Blog / About, post pages, RSS, sitemap,
 this file stays the vision + the decisions. Most of what follows is still options
 with a recommendation attached, plus the questions in §11.
 
-**The site name is still a placeholder** (`Roughly Precise`, set in
-`src/config.ts`). So is the domain — `SITE_URL` must be real before deploy.
+**Name decided (2026-08-06): Data Mixtape**, at `datamixtape.com` — registered,
+and set in `src/config.ts`. See `AGENTS.md` for current state and next tasks.
 
 ### Decisions locked (2026-07-30)
 
@@ -24,8 +24,8 @@ with a recommendation attached, plus the questions in §11.
 | Reader | Write what's interesting to *you*, but **label posts by type** so a general reader and a methods reader each know which ones are theirs | §5 |
 | Phase 1 | **Email capture** in; **all five projects represented**, three of them deployed | §10 |
 
-Still open and blocking Phase 1: **the site name and domain** (§8). Name flavor
-deliberately left open for now.
+Phase 1's naming/domain blocker is **cleared** (§8) — `datamixtape.com` is
+registered.
 
 ---
 
