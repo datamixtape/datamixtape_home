@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const appUrl = 'https://heat-check-nba.vercel.app';
+---
+
+<Base
+  title="Heat Check"
+  description="Shot heatmaps for any NBA player or five-man lineup — offense, defense, on and off."
+>
+  <iframe
+    src={appUrl}
+    title="Heat Check"
+    class="heat-check-frame"
+    allow="clipboard-write"
+  ></iframe>
+</Base>
+
+<style>
+  .heat-check-frame {
+    width: 100%;
+    height: calc(100vh - 44px);
+    border: none;
+    display: block;
+  }
+</style>
