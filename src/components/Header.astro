@@ -38,23 +38,19 @@ const active = (item: (typeof NAV)[number]) =>
 
               <div class="invisible absolute top-full left-0 z-10 pt-2 opacity-0 transition-opacity group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
                 <ul class="min-w-44 rounded-lg border border-rule bg-paper-raised py-1.5 shadow-[0_4px_20px_rgba(28,26,23,0.12)]">
-                  {item.children.map((child) => {
-                    const external = child.href.startsWith('http');
-                    return (
-                      <li>
-                        <a
-                          href={child.href}
-                          {...(external ? { target: '_blank', rel: 'noopener' } : {})}
-                          class:list={[
-                            'block px-3.5 py-1.5 text-sm hover:bg-accent-soft hover:text-ink',
-                            isActive(child.href) ? 'text-ink' : 'text-ink-soft',
-                          ]}
-                        >
-                          {child.label}
-                        </a>
-                      </li>
-                    );
-                  })}
+                  {item.children.map((child) => (
+                    <li>
+                      <a
+                        href={child.href}
+                        class:list={[
+                          'block px-3.5 py-1.5 text-sm hover:bg-accent-soft hover:text-ink',
+                          isActive(child.href) ? 'text-ink' : 'text-ink-soft',
+                        ]}
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>

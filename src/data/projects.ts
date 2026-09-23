@@ -107,7 +107,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'nil-money',
-    name: 'NIL Money Map',
+    name: 'Hometown Money',
     blurb:
       'Where college sports money lands — $1.63B of it, mapped to the towns the players are from.',
     pitch:
