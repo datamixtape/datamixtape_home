@@ -37,6 +37,11 @@ export interface Project {
   added: string;
   /** External URL today; becomes a path rewrite in Phase 2 (NOTES.md §4B). */
   href?: string;
+  /**
+   * Screenshot of the tool, served from public/. Shown beside the entry on the
+   * home page. Re-shoot when the tool's look changes.
+   */
+  image?: string;
   /** Card accent, this project's own. */
   accent: string;
   /** Very light wash behind the card. */
@@ -66,6 +71,7 @@ export const projects: Project[] = [
     status: 'live',
     added: '2026-06-27',
     href: 'https://the-blind-board.vercel.app',
+    image: '/shots/blind-board.jpg',
     accent: '#A9662F',
     tint: '#F6EEE4',
   },
@@ -102,6 +108,7 @@ export const projects: Project[] = [
     status: 'live',
     added: '2026-06-10',
     href: 'https://heat-check-nba.vercel.app',
+    image: '/shots/heat-check.jpg',
     accent: '#C33B27',
     tint: '#F8EAE6',
   },
@@ -119,6 +126,7 @@ export const projects: Project[] = [
     status: 'live',
     added: '2026-07-15',
     href: 'https://nilredistribution.vercel.app',
+    image: '/shots/nil-money.jpg',
     accent: '#9A7B1F',
     tint: '#F5F1E1',
   },

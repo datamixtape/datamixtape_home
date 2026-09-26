@@ -9,11 +9,17 @@
 */
 const ACTION = '';
 const configured = ACTION.length > 0;
+
+interface Props {
+  /** Narrow column (the home sidebar): field and button stack. */
+  stacked?: boolean;
+}
+const { stacked = false } = Astro.props;
 ---
 
-<section class="rounded-xl border border-rule bg-paper-raised p-7 sm:p-9">
-  <h2 class="text-2xl text-ink">Get the next one</h2>
-  <p class="mt-2 max-w-prose text-[0.9375rem] leading-relaxed text-ink-soft">
+<section class:list={['rounded-lg border-2 border-ink bg-paper', stacked ? 'p-5' : 'p-7 sm:p-9']}>
+  <h2 class:list={['font-extrabold text-ink', stacked ? 'text-[1.4rem]' : 'text-2xl']}>Get the next one</h2>
+  <p class:list={['mt-2 max-w-prose leading-relaxed text-ink-soft', stacked ? 'text-sm' : 'text-[0.9375rem]']}>
     A note when a new game or map goes up, and when something interesting turns up in
     the data. No more than that.
   </p>
@@ -21,7 +27,7 @@ const configured = ACTION.length > 0;
   <form
     action={ACTION}
     method="post"
-    class="mt-5 flex max-w-md flex-col gap-3 sm:flex-row"
+    class:list={['mt-5 flex max-w-md flex-col gap-2.5', !stacked && 'sm:flex-row sm:gap-3']}
     data-configured={String(configured)}
   >
     <label for="email" class="sr-only">Email address</label>

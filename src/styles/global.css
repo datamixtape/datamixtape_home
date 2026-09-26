@@ -1,26 +1,28 @@
 @import 'tailwindcss';
 
-@import '@fontsource-variable/fraunces';
-@import '@fontsource-variable/inter';
+@import '@fontsource-variable/bricolage-grotesque';
+@import '@fontsource-variable/public-sans';
 
 /*
   Site tier only (NOTES.md §5). Tools keep their own palettes; this is the
-  chrome that wraps them. Warm paper, near-black warm ink, one restrained
-  accent. Light only.
+  chrome that wraps them. White page, black ink, heavy grotesque display.
+  The brand color is black on purpose: the tool screenshots on the home page
+  bring plenty of color (maps especially), so the chrome stays out of their
+  way. Light only.
 */
 @theme {
-  --font-display: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
-  --font-sans: 'Inter Variable', system-ui, -apple-system, sans-serif;
+  --font-display: 'Bricolage Grotesque Variable', 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: 'Public Sans Variable', system-ui, -apple-system, sans-serif;
 
-  --color-paper: #faf8f4;
-  --color-paper-raised: #fffdfa;
-  --color-ink: #1c1a17;
-  --color-ink-soft: #4a453e;
-  --color-ink-muted: #7d766c;
-  --color-rule: #e5e0d6;
-  --color-rule-strong: #d3ccbe;
-  --color-accent: #b04a2f;
-  --color-accent-soft: #f3e6e0;
+  --color-paper: #ffffff;
+  --color-paper-raised: #f6f6f4;
+  --color-ink: #111111;
+  --color-ink-soft: #454545;
+  --color-ink-muted: #737373;
+  --color-rule: #e4e4e1;
+  --color-rule-strong: #cfcfcb;
+  --color-accent: #111111;
+  --color-accent-soft: #efefec;
 }
 
 @layer base {
@@ -32,7 +34,7 @@
     background-color: var(--color-paper);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    font-feature-settings: 'tnum' 1, 'cv05' 1;
+    font-variant-numeric: tabular-nums;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -42,8 +44,8 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 40;
-    letter-spacing: -0.015em;
+    font-weight: 700;
+    letter-spacing: -0.025em;
     text-wrap: balance;
   }
 
@@ -133,12 +135,12 @@
 }
 .prose-note code {
   font-size: 0.9em;
-  background: #f0ece3;
+  background: var(--color-paper-raised);
   padding: 0.12em 0.35em;
   border-radius: 3px;
 }
 .prose-note pre {
-  background: #f0ece3;
+  background: var(--color-paper-raised);
   padding: 1rem 1.15rem;
   border-radius: 6px;
   overflow-x: auto;

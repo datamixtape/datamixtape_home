@@ -27,11 +27,14 @@ const href = project
 const title = project ? project.name : entry.post.data.title;
 const body = project ? project.blurb : entry.post.data.description;
 const external = Boolean(project && live);
+const image = project?.image;
 ---
 
 <article
-  class="group relative border-b border-rule py-8 pl-5 first:pt-0"
-  style={project ? `--dot:${project.accent}` : undefined}
+  class:list={[
+    'group relative border-b border-rule py-8 pl-5 first:pt-0',
+    image && 'grid items-center gap-5 sm:grid-cols-[minmax(0,1fr)_14.5rem] sm:gap-7',
+  ]}
 >
   {
     project && (
@@ -43,66 +46,81 @@ const external = Boolean(project && live);
     )
   }
 
-  <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
-    {
-      project ? (
-        <>
-          <span class="font-medium tracking-wide" style={`color:${project.accent}`}>
-            {SECTIONS[project.section].heading} · {project.topic}
-          </span>
-          {!live && (
-            <span class="rounded-full border border-rule-strong px-2 py-0.5 text-ink-muted">
-              {STATUS_LABEL[project.status]}
+  <div>
+    <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
+      {
+        project ? (
+          <>
+            <span class="font-medium tracking-wide" style={`color:${project.accent}`}>
+              {SECTIONS[project.section].heading} · {project.topic}
             </span>
-          )}
-        </>
-      ) : (
-        <span class="rounded-full border border-rule-strong px-2 py-0.5 font-medium tracking-wide text-ink-soft">
-          {entry.post.data.kind}
+            {!live && (
+              <span class="rounded-full border border-rule-strong px-2 py-0.5 text-ink-muted">
+                {STATUS_LABEL[project.status]}
+              </span>
+            )}
+          </>
+        ) : (
+          <span class="rounded-full border border-rule-strong px-2 py-0.5 font-medium tracking-wide text-ink-soft">
+            {entry.post.data.kind}
+          </span>
+        )
+      }
+      <time datetime={date.toISOString()} class="text-ink-muted">{formatDate(date)}</time>
+    </div>
+
+    <h3 class:list={['mt-2 leading-tight', project ? 'text-[1.75rem]' : 'text-[1.35rem]']}>
+      <a
+        href={href}
+        target={external ? '_blank' : undefined}
+        rel={external ? 'noopener' : undefined}
+        class="text-ink decoration-2 underline-offset-4 group-hover:underline"
+      >
+        {title}
+        <span class="absolute inset-0" aria-hidden="true"></span>
+      </a>
+    </h3>
+
+    <p class="mt-1.5 max-w-prose text-[0.9375rem] leading-relaxed text-ink-soft">
+      {body}
+    </p>
+
+    {
+      live && (
+        <span
+          class="mt-3 inline-flex items-center gap-1.5 text-sm font-medium"
+          style={`color:${project!.accent}`}
+        >
+          Open
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="transition-transform group-hover:translate-x-0.5"
+            aria-hidden="true"
+          >
+            <path d="M3 8h10M9 4l4 4-4 4" />
+          </svg>
         </span>
       )
     }
-    <time datetime={date.toISOString()} class="text-ink-muted">{formatDate(date)}</time>
   </div>
 
-  <h3 class:list={['mt-2 leading-snug', project ? 'text-[1.75rem]' : 'text-[1.35rem]']}>
-    <a
-      href={href}
-      target={external ? '_blank' : undefined}
-      rel={external ? 'noopener' : undefined}
-      class="text-ink hover:text-accent"
-    >
-      {title}
-      <span class="absolute inset-0" aria-hidden="true"></span>
-    </a>
-  </h3>
-
-  <p class="mt-1.5 max-w-prose text-[0.9375rem] leading-relaxed text-ink-soft">
-    {body}
-  </p>
-
   {
-    live && (
-      <span
-        class="mt-3 inline-flex items-center gap-1.5 text-sm font-medium"
-        style={`color:${project!.accent}`}
-      >
-        Open
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 16 16"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.6"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="transition-transform group-hover:translate-x-0.5"
-          aria-hidden="true"
-        >
-          <path d="M3 8h10M9 4l4 4-4 4" />
-        </svg>
-      </span>
+    image && (
+      <img
+        src={image}
+        alt=""
+        loading="lazy"
+        width="1400"
+        height="875"
+        class="aspect-[16/10] w-full rounded-md border border-rule object-cover object-top max-sm:-order-1"
+      />
     )
   }
 </article>

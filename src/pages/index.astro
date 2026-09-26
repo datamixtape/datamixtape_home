@@ -3,21 +3,111 @@ import Base from '../layouts/Base.astro';
 import FeedEntry from '../components/FeedEntry.astro';
 import EmailCapture from '../components/EmailCapture.astro';
 import { getFeed } from '../lib/feed';
+import { projects, SECTIONS, STATUS_LABEL } from '../data/projects';
+import { formatDate } from '../lib/posts';
 import { SITE_NAME } from '../config';
 
 const feed = await getFeed();
+
+/*
+  The newest live tool with a screenshot gets the top slot; everything else
+  that's out (tools and posts) runs below it, newest first. Unfinished tools
+  wait in the sidebar instead of taking a full entry.
+*/
+const featured = feed.find((e) => e.kind === 'project' && e.project.status === 'live' && e.project.image);
+const rest = feed.filter(
+  (e) => e !== featured && (e.kind === 'post' || e.project.status === 'live')
+);
+const upcoming = projects
+  .filter((p) => p.status !== 'live')
+  .sort((a, b) => b.added.localeCompare(a.added));
+const f = featured?.kind === 'project' ? featured.project : null;
 ---
 
 <Base>
-  {/* No hero: the header already names the site, the feed is the page, and the
-      pitch is on /about. The h1 is for screen readers and search only. */}
+  {/* The header already names the site; the h1 is for screen readers and search. */}
   <h1 class="sr-only">{SITE_NAME}</h1>
 
-  <div class="wrap-prose pt-10 sm:pt-14">
-    {feed.map((entry) => <FeedEntry entry={entry} />)}
-  </div>
+  <div class="wrap">
+    {
+      f && (
+        <section class="group relative grid items-center gap-6 border-b border-rule py-10 md:grid-cols-[1.45fr_1fr] md:gap-10">
+          <img
+            src={f.image}
+            alt=""
+            width="1400"
+            height="875"
+            class="aspect-[16/10] w-full rounded-lg border border-rule object-cover object-top"
+          />
+          <div>
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
+              <span class="rounded-[3px] bg-ink px-1.5 py-0.5 text-[0.6875rem] font-semibold tracking-[0.08em] text-paper uppercase">
+                New
+              </span>
+              <span class="font-medium tracking-wide" style={`color:${f.accent}`}>
+                {SECTIONS[f.section].heading} · {f.topic}
+              </span>
+              <time datetime={featured!.date.toISOString()} class="text-ink-muted">
+                {formatDate(featured!.date)}
+              </time>
+            </div>
+            <h2 class="mt-3 text-[2.5rem] leading-[1.02] font-extrabold tracking-[-0.03em] sm:text-[2.9rem]">
+              <a href={f.href} target="_blank" rel="noopener" class="text-ink">
+                {f.name}
+                <span class="absolute inset-0" aria-hidden="true" />
+              </a>
+            </h2>
+            <p class="mt-3.5 max-w-[42ch] text-[1.0625rem] leading-relaxed text-ink-soft">{f.blurb}</p>
+            <span class="mt-6 inline-flex items-center gap-2 rounded-md bg-ink px-4.5 py-2.5 text-[0.9375rem] font-semibold text-paper">
+              Open it
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-0.5" aria-hidden="true">
+                <path d="M3 8h10M9 4l4 4-4 4" />
+              </svg>
+            </span>
+          </div>
+        </section>
+      )
+    }
 
-  <div class="wrap-prose mt-14">
-    <EmailCapture />
+    <div class="grid gap-12 pt-9 lg:grid-cols-[minmax(0,1fr)_18.5rem] lg:gap-14">
+      <div>
+        <h2 class="mb-7 font-sans text-xs font-bold tracking-[0.1em] text-ink-muted uppercase">
+          All tools
+        </h2>
+        <div>{rest.map((entry) => <FeedEntry entry={entry} />)}</div>
+      </div>
+
+      <aside class="flex flex-col gap-9">
+        <EmailCapture stacked />
+
+        {
+          upcoming.length > 0 && (
+            <section>
+              <h2 class="font-sans text-xs font-bold tracking-[0.1em] text-ink-muted uppercase">
+                Coming soon
+              </h2>
+              <ul class="mt-2">
+                {upcoming.map((p) => (
+                  <li class="border-b border-rule py-3.5">
+                    <a href={`/${p.section}`} class="group/soon block">
+                      <div class="flex items-center gap-2">
+                        <span class="size-2.5 flex-none rounded-full" style={`background:${p.accent}`} />
+                        <span class="font-display text-[1.0625rem] font-bold tracking-[-0.01em] text-ink group-hover/soon:underline">
+                          {p.name}
+                        </span>
+                        <span class="ml-auto rounded-full border border-rule px-2 py-px text-[0.6875rem] whitespace-nowrap text-ink-muted">
+                          {STATUS_LABEL[p.status]}
+                        </span>
+                      </div>
+                      <p class="mt-1 ml-[1.125rem] text-[0.84rem] leading-snug text-ink-soft">{p.blurb}</p>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+      </aside>
+    </div>
   </div>
 </Base>
