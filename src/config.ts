@@ -42,8 +42,21 @@ export const CONTACT_EMAIL = 'hello@datamixtape.com';
  * tagged with a `topic`. See AGENTS.md.
  */
 export const NAV: NavItem[] = [
-  { label: 'Games', href: '/games' },
-  { label: 'Data Exploration', href: '/data' },
+  {
+    label: 'Data Exploration',
+    href: '/data',
+    children: [
+      { label: 'NIL Money Map', href: 'https://nilredistribution.vercel.app' },
+      { label: 'Heat Check', href: '/data/heat-check' },
+    ],
+  },
+  {
+    label: 'Games',
+    href: '/games',
+    children: [
+      { label: 'The Blind Board', href: '/games/blind-board' },
+    ],
+  },
   { label: 'Blog', href: '/blog' },
   { label: 'About', href: '/about' },
 ];
