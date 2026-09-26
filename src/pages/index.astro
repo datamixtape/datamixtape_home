@@ -3,16 +3,17 @@ import Base from '../layouts/Base.astro';
 import FeedEntry from '../components/FeedEntry.astro';
 import EmailCapture from '../components/EmailCapture.astro';
 import { getFeed } from '../lib/feed';
-import { SITE_NAME } from '../config';
 
 const feed = await getFeed();
 ---
 
 <Base>
-  {/* No hero: the feed is the page; the pitch is on /about. */}
-  <h1 class="sr-only">{SITE_NAME}</h1>
+  {/* One short line; the feed is the page and the pitch is on /about. */}
+  <section class="wrap-prose pt-14 pb-6 sm:pt-20">
+    <h1 class="text-[2rem] leading-[1.1] sm:text-[2.6rem]">Fun with Data</h1>
+  </section>
 
-  <div class="wrap-prose pt-10 sm:pt-14">
+  <div class="wrap-prose">
     {feed.map((entry) => <FeedEntry entry={entry} />)}
   </div>
 
