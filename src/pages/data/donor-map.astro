@@ -1,0 +1,13 @@
+---
+import ToolFrame from '../../layouts/ToolFrame.astro';
+
+// Not deployed yet: a production build sends visitors to the section page.
+if (!import.meta.env.DEV) return Astro.redirect('/data');
+---
+
+<ToolFrame
+  title="Where the Money Goes"
+  description="Political money that crosses state lines — which states bankroll other states' races in 2026."
+  src="http://localhost:8125/flows.html"
+  devSrc="http://localhost:8125/flows.html"
+/>

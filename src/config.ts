@@ -48,6 +48,8 @@ export const NAV: NavItem[] = [
     children: [
       { label: 'NIL Money Map', href: '/data/nil-money' },
       { label: 'Heat Check', href: '/data/heat-check' },
+      // Not deployed yet, so only linked under `astro dev`.
+      ...(import.meta.env.DEV ? [{ label: 'Where the Money Goes', href: '/data/donor-map' }] : []),
     ],
   },
   {

@@ -129,19 +129,20 @@ export const projects: Project[] = [
   },
   {
     slug: 'donor-map',
-    name: 'Who Funds Whom',
+    name: 'Where the Money Goes',
     blurb:
-      'Political donations by profession, district by district — which jobs bankroll which candidates.',
+      "Political money that crosses state lines — which states bankroll other states' races in 2026.",
     pitch:
-      'Campaign filings ask donors what they do for a living, and almost nobody reads that column. The ' +
-      'question is who each profession actually funds, and how differently a place gives than it votes. ' +
-      'Straight from FEC filings. Still being measured: at congressional-district resolution most ' +
-      'professions run out of donors, so the geography may have to be coarser than a district. The ' +
-      'methodology will be published in full — on this subject that is the whole ballgame.',
+      'Every 2026 individual donation to a federal candidate, traced from the state the donor lives in ' +
+      'to the state of the race. Each pair is scored against the national pattern, so a big state ' +
+      "sending a lot of money only stands out when it sends more than its size predicts. Pick a state " +
+      'to see where its money goes and where its candidates’ money comes from. Straight from FEC filings.',
     section: 'data',
     topic: 'Politics',
-    status: 'idea',
+    // Not deployed yet: live (embedded, linked) only under `astro dev`.
+    status: import.meta.env.DEV ? 'live' : 'built',
     added: '2026-07-30',
+    image: '/shots/donor-map.jpg',
     accent: '#6A5A99',
   },
 ];
