@@ -109,15 +109,16 @@ export const projects: Project[] = [
     slug: 'nil-money',
     name: 'NIL Money Map',
     blurb:
-      'Where college sports money lands — $1.63B of it, mapped to the towns the players are from.',
+      'Where college sports money lands — $2.03B of it, mapped to the towns the players are from.',
     pitch:
       'NIL deals are usually counted by school. This counts them by hometown: every dollar in football and ' +
       "men's basketball placed on the map where the player grew up, not where they play. It is a different " +
       'picture of who college sports actually pays, and which places send the talent that gets paid.',
     section: 'data',
     topic: 'Sports',
-    status: 'built',
+    status: 'live',
     added: '2026-07-15',
+    href: 'https://nilredistribution.vercel.app',
     accent: '#9A7B1F',
     tint: '#F5F1E1',
   },
