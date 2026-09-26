@@ -25,6 +25,17 @@
   --color-accent-soft: #efefec;
 }
 
+/* Rendered height of Header.astro (name + nav stack below 640px). Used by
+   the full-screen tool embeds; re-measure if the header changes. */
+:root {
+  --header-h: 126px;
+}
+@media (min-width: 640px) {
+  :root {
+    --header-h: 85px;
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;

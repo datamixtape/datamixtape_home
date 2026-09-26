@@ -46,7 +46,7 @@ export const NAV: NavItem[] = [
     label: 'Data Exploration',
     href: '/data',
     children: [
-      { label: 'NIL Money Map', href: 'https://nilredistribution.vercel.app' },
+      { label: 'NIL Money Map', href: '/data/nil-money' },
       { label: 'Heat Check', href: '/data/heat-check' },
     ],
   },

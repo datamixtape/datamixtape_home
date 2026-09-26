@@ -3,13 +3,18 @@ import { STATUS_LABEL, type Project } from '../data/projects';
 
 interface Props {
   project: Project;
-  /** Section pages show the longer pitch; the home mosaic shows the blurb. */
+  /** Section pages show the longer pitch; elsewhere the one-line blurb. */
   detailed?: boolean;
 }
 
 const { project, detailed = false } = Astro.props;
-const { name, blurb, pitch, status, href, accent, tint } = project;
+const { name, blurb, pitch, status, href, accent, topic, image } = project;
 
+/*
+  Same parts as the home feed entry, stacked for a two-up grid: the tool's
+  screenshot, then the colored stripe + kicker, title, text, Open. Tools with
+  no screenshot yet get a plain panel in their own color so the grid stays even.
+*/
 const live = status === 'live';
 const Tag = live ? 'a' : 'div';
 ---
@@ -19,57 +24,82 @@ const Tag = live ? 'a' : 'div';
   target={live ? '_blank' : undefined}
   rel={live ? 'noopener' : undefined}
   class:list={[
-    'group relative flex flex-col overflow-hidden rounded-xl border p-6 sm:p-7',
-    live ? 'transition-shadow hover:shadow-[0_2px_18px_rgba(28,26,23,0.09)]' : '',
+    'group flex flex-col rounded-lg border border-rule bg-paper p-4 sm:p-5',
+    live && 'transition-shadow hover:shadow-[0_6px_24px_rgba(0,0,0,0.08)]',
   ]}
-  style={`background:${tint};border-color:color-mix(in srgb, ${accent} 22%, transparent)`}
 >
-  <span
-    class="absolute inset-x-0 top-0 h-[3px]"
-    style={`background:${accent}`}
-    aria-hidden="true"></span>
-
-  <div class="flex items-center gap-3">
-    <span
-      class="inline-block size-2 shrink-0 rounded-full"
-      style={`background:${accent}`}
-      aria-hidden="true"></span>
-    <span
-      class="text-[0.6875rem] font-medium tracking-[0.09em] uppercase"
-      style={`color:${accent}`}
-    >
-      {STATUS_LABEL[status]}
-    </span>
-  </div>
-
-  <h3 class="mt-3 text-2xl text-ink">{name}</h3>
-
-  <p class="mt-2 flex-1 text-[0.9375rem] leading-relaxed text-ink-soft">
-    {detailed ? pitch : blurb}
-  </p>
-
   {
-    live && (
-      <span
-        class="mt-5 inline-flex items-center gap-1.5 text-sm font-medium"
-        style={`color:${accent}`}
+    image ? (
+      <img
+        src={image}
+        alt=""
+        loading="lazy"
+        width="1400"
+        height="875"
+        class="aspect-[16/10] w-full rounded-md border border-rule object-cover object-top"
+      />
+    ) : (
+      <div
+        class="flex aspect-[16/10] w-full items-center justify-center rounded-md"
+        style={`background:color-mix(in srgb, ${accent} 9%, white)`}
       >
-        Open
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 16 16"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.6"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="transition-transform group-hover:translate-x-0.5"
-          aria-hidden="true"
-        >
-          <path d="M3 8h10M9 4l4 4-4 4" />
-        </svg>
-      </span>
+        <span class="text-sm font-medium" style={`color:${accent}`}>
+          {STATUS_LABEL[status]}
+        </span>
+      </div>
     )
   }
+
+  <div class="relative mt-5 flex flex-1 flex-col pl-4">
+    <span
+      class="absolute top-0 bottom-0 left-0 w-[3px] rounded-full"
+      style={`background:${accent}`}
+      aria-hidden="true"></span>
+
+    <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
+      <span class="font-medium tracking-wide" style={`color:${accent}`}>{topic}</span>
+      {
+        !live && (
+          <span class="rounded-full border border-rule-strong px-2 py-0.5 text-ink-muted">
+            {STATUS_LABEL[status]}
+          </span>
+        )
+      }
+    </div>
+
+    <h3
+      class="mt-2 text-[1.6rem] leading-tight text-ink decoration-2 underline-offset-4 group-hover:underline"
+    >
+      {name}
+    </h3>
+
+    <p class="mt-2 flex-1 text-[0.9375rem] leading-relaxed text-ink-soft">
+      {detailed ? pitch : blurb}
+    </p>
+
+    {
+      live && (
+        <span
+          class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium"
+          style={`color:${accent}`}
+        >
+          Open
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="transition-transform group-hover:translate-x-0.5"
+            aria-hidden="true"
+          >
+            <path d="M3 8h10M9 4l4 4-4 4" />
+          </svg>
+        </span>
+      )
+    }
+  </div>
 </Tag>

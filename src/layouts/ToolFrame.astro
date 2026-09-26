@@ -1,0 +1,26 @@
+---
+import Base from './Base.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  /** The tool's own deployment, shown full-bleed under the site header. */
+  src: string;
+}
+
+const { title, description, src } = Astro.props;
+---
+
+<Base title={title} description={description}>
+  <iframe {src} {title} class="tool-frame" allow="clipboard-write"></iframe>
+</Base>
+
+<style>
+  /* Fill the rest of the first screen; --header-h lives in global.css. */
+  .tool-frame {
+    display: block;
+    width: 100%;
+    height: calc(100svh - var(--header-h));
+    border: none;
+  }
+</style>

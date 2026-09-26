@@ -44,8 +44,6 @@ export interface Project {
   image?: string;
   /** Card accent, this project's own. */
   accent: string;
-  /** Very light wash behind the card. */
-  tint: string;
 }
 
 export const STATUS_LABEL: Record<ProjectStatus, string> = {
@@ -73,7 +71,6 @@ export const projects: Project[] = [
     href: 'https://the-blind-board.vercel.app',
     image: '/shots/blind-board.jpg',
     accent: '#A9662F',
-    tint: '#F6EEE4',
   },
   {
     slug: 'greenlight',
@@ -91,7 +88,6 @@ export const projects: Project[] = [
     status: 'in-progress',
     added: '2026-07-29',
     accent: '#2F8455',
-    tint: '#E9F2EB',
   },
   {
     slug: 'heat-check',
@@ -110,7 +106,6 @@ export const projects: Project[] = [
     href: 'https://heat-check-nba.vercel.app',
     image: '/shots/heat-check.jpg',
     accent: '#C33B27',
-    tint: '#F8EAE6',
   },
   {
     slug: 'nil-money',
@@ -128,7 +123,6 @@ export const projects: Project[] = [
     href: 'https://nilredistribution.vercel.app',
     image: '/shots/nil-money.jpg',
     accent: '#9A7B1F',
-    tint: '#F5F1E1',
   },
   {
     slug: 'donor-map',
@@ -146,7 +140,6 @@ export const projects: Project[] = [
     status: 'idea',
     added: '2026-07-30',
     accent: '#6A5A99',
-    tint: '#EFEDF6',
   },
 ];
 
