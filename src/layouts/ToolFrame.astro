@@ -6,9 +6,12 @@ interface Props {
   description: string;
   /** The tool's own deployment, shown full-bleed under the site header. */
   src: string;
+  /** Local dev server to embed instead under `astro dev`, to preview unshipped tool changes. */
+  devSrc?: string;
 }
 
-const { title, description, src } = Astro.props;
+const { title, description, devSrc } = Astro.props;
+const src = import.meta.env.DEV && devSrc ? devSrc : Astro.props.src;
 ---
 
 <Base title={title} description={description}>

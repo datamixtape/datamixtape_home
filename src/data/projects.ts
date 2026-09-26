@@ -70,7 +70,7 @@ export const projects: Project[] = [
     added: '2026-06-27',
     href: 'https://the-blind-board.vercel.app',
     image: '/shots/blind-board.jpg',
-    accent: '#A9662F',
+    accent: '#1F3A2B',
   },
   {
     slug: 'greenlight',
