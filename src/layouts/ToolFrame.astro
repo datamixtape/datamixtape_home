@@ -4,7 +4,7 @@ import Base from './Base.astro';
 interface Props {
   title: string;
   description: string;
-  /** The tool's own deployment, shown full-bleed under the site header. */
+  /** The tool's own deployment, embedded under the site header. */
   src: string;
   /** Local dev server to embed instead under `astro dev`, to preview unshipped tool changes. */
   devSrc?: string;
@@ -15,15 +15,36 @@ const src = import.meta.env.DEV && devSrc ? devSrc : Astro.props.src;
 ---
 
 <Base title={title} description={description}>
-  <iframe {src} {title} class="tool-frame" allow="clipboard-write"></iframe>
+  {/*
+    From tablet up the tool sits in the page column as a framed panel: its left
+    edge lines up with the wordmark, and its own background reads as the tool's
+    surface instead of butting against the white header. Phones get it
+    full-width, since the column's gutters would only cost the tool room.
+  */}
+  <div class="tool-wrap">
+    <iframe {src} {title} class="tool-frame" allow="clipboard-write"></iframe>
+  </div>
 </Base>
 
 <style>
-  /* Fill the rest of the first screen; --header-h lives in global.css. */
+  /* --header-h lives in global.css. */
   .tool-frame {
     display: block;
     width: 100%;
     height: calc(100svh - var(--header-h));
     border: none;
+  }
+
+  @media (min-width: 768px) {
+    .tool-wrap {
+      margin-inline: auto;
+      max-width: 68rem;
+      padding: 1.5rem 1.5rem 0;
+    }
+    .tool-frame {
+      height: calc(100svh - var(--header-h) - 3rem);
+      border: 1px solid var(--color-rule);
+      border-radius: 0.5rem;
+    }
   }
 </style>
