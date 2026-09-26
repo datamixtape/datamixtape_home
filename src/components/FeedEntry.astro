@@ -1,5 +1,5 @@
 ---
-import { STATUS_LABEL, SECTIONS, type Project } from '../data/projects';
+import { STATUS_LABEL, SECTIONS, projectPath, type Project } from '../data/projects';
 import { formatDate } from '../lib/posts';
 import type { FeedEntry } from '../lib/feed';
 
@@ -18,15 +18,10 @@ const { date } = entry;
 const project: Project | null = entry.kind === 'project' ? entry.project : null;
 const live = project?.status === 'live';
 
-const href = project
-  ? live
-    ? project.href
-    : `/${project.section}`
-  : `/blog/${entry.post.id}`;
+const href = project ? projectPath(project) : `/blog/${entry.post.id}`;
 
 const title = project ? project.name : entry.post.data.title;
 const body = project ? project.blurb : entry.post.data.description;
-const external = Boolean(project && live);
 const image = project?.image;
 ---
 
@@ -72,8 +67,6 @@ const image = project?.image;
     <h3 class:list={['mt-2 leading-tight', project ? 'text-[1.75rem]' : 'text-[1.35rem]']}>
       <a
         href={href}
-        target={external ? '_blank' : undefined}
-        rel={external ? 'noopener' : undefined}
         class="text-ink decoration-2 underline-offset-4 group-hover:underline"
       >
         {title}

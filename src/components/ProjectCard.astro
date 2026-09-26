@@ -1,5 +1,5 @@
 ---
-import { STATUS_LABEL, type Project } from '../data/projects';
+import { STATUS_LABEL, projectPath, type Project } from '../data/projects';
 
 interface Props {
   project: Project;
@@ -8,7 +8,7 @@ interface Props {
 }
 
 const { project, detailed = false } = Astro.props;
-const { name, blurb, pitch, status, href, accent, topic, image } = project;
+const { name, blurb, pitch, status, accent, topic, image } = project;
 
 /*
   Same parts as the home feed entry, stacked for a two-up grid: the tool's
@@ -20,9 +20,7 @@ const Tag = live ? 'a' : 'div';
 ---
 
 <Tag
-  href={live ? href : undefined}
-  target={live ? '_blank' : undefined}
-  rel={live ? 'noopener' : undefined}
+  href={live ? projectPath(project) : undefined}
   class:list={[
     'group flex flex-col rounded-lg border border-rule bg-paper p-4 sm:p-5',
     live && 'transition-shadow hover:shadow-[0_6px_24px_rgba(0,0,0,0.08)]',

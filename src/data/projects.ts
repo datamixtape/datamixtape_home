@@ -35,7 +35,10 @@ export interface Project {
    * correct them before deploy.
    */
   added: string;
-  /** External URL today; becomes a path rewrite in Phase 2 (NOTES.md §4B). */
+  /**
+   * The tool's own deployment. Visitors never go here directly: every link
+   * points at `projectPath`, the on-site page that embeds it.
+   */
   href?: string;
   /**
    * Screenshot of the tool, served from public/. Shown beside the entry on the
@@ -142,6 +145,13 @@ export const projects: Project[] = [
     accent: '#6A5A99',
   },
 ];
+
+/**
+ * Where a project links to on this site. Live tools open inside the site
+ * (pages/<section>/<slug>.astro embeds `href`); the rest go to their section.
+ */
+export const projectPath = (p: Project) =>
+  p.status === 'live' ? `/${p.section}/${p.slug}` : `/${p.section}`;
 
 export const bySection = (section: ProjectSection) =>
   projects.filter((p) => p.section === section);
