@@ -114,6 +114,40 @@ Phase 1 shell: home feed, Games / Data Exploration / Blog / About, post pages,
 RSS, sitemap, 404, privacy policy, responsive down to 375px. Build is clean, no
 console errors, fonts self-hosted (no third-party requests).
 
+## Deploy queue (staged 2026-09-28 — run only when the user says "deploy")
+
+Everything below is committed locally, built, and verified inside the hub under
+`astro dev` (desktop + phone). Nothing is pushed or deployed. **A push
+auto-deploys, so treat pushing the same as `vercel --prod`.** Order matters: the
+production hub embeds each tool's *production* URL, so ship the tools first and
+the hub last. All Vercel projects are in the same team (`team_DwrC…`).
+
+| # | What | Repo / branch | Unpushed commits | Ship with |
+|---|---|---|---|---|
+| 1 | Blind Board | `nba_draft` (private `blindboard`) `main` | a3c0c67 → 57a642e (7): re-theme, frame sizing, no header when embedded, prospect-card hero, settings panel, brand in draft bar | `cd nba_draft/app && npx vercel --prod` → the-blind-board.vercel.app |
+| 2 | Heat Check | `nba_viz` (private `heatcheck`) `main` | f19bc16, 45fdf99: re-theme, embed script | rebuild (`build_lineup_compare.py` → `port_to_live.py`), then `cd design/site && npx vercel --prod` → heat-check-nba.vercel.app |
+| 3 | NIL Money Map | `NIL money` (private `nilmoney`) `main` | 3ccd61a, cdddf95: re-theme, embed script (ddcc33e = TNS compare script, repo-only) | `python3 build_map.py && cd prototype && npx vercel --prod` → nilredistribution.vercel.app. `prototype/` checked: no TNS data. TNS integration is **not** in this build (its decisions are still open) |
+| 4 | Where the Money Goes | `political_donation_map` — **not a git repo, no Vercel project** | — | Not in this deploy. Production hub redirects `/data/donor-map` → `/data` until it gets a repo + project |
+| 5 | Hub | this repo, `local-full-site` → `main` (public `datamixtape_home`) | 16 ahead of `origin/main` (which is the "coming soon" placeholder) | merge into `main` + push (auto-deploys datamixtape.com), or `vercel --prod` |
+
+**Before step 5:**
+- Fix the made-up `added` dates in `data/projects.ts` (only Blind Board's is
+  real) — they show on the page.
+- Every commit here is authored `placeholder@users.noreply.github.com`. Fine for
+  a public repo as-is (it hides identity), but decide before the push, because
+  rewriting after it is messy (see step 3 below).
+- Drafts (e.g. `flip-card-demo.mdx`) only render under `astro dev`, so they
+  won't ship.
+
+**Still to do before deploy (the user wants these in the same batch):** bigger
+page titles and trimmed explainer text on Heat Check, NIL and Where the Money Goes.
+
+**Local "as-shipped" preview:** `:5173` serves the Blind Board *production
+build* (`/tmp/bb_serve.py`, SPA fallback) rather than Vite dev, so after any
+Blind Board edit run `nba_draft/refresh.sh` first. `:8123/:8124/:8125` serve
+the NIL / Heat Check / donor builds from `/tmp/*_dist`. Hub: `astro dev` on
+:4331 (it embeds the local builds via `devSrc`). `astro build` is clean.
+
 ## Next, in order
 
 1. ~~**Pick the name + buy the domain**~~ — done, **Data Mixtape** /
