@@ -14,37 +14,89 @@ const { title, description, devSrc } = Astro.props;
 const src = import.meta.env.DEV && devSrc ? devSrc : Astro.props.src;
 ---
 
-<Base title={title} description={description}>
+<Base title={title} description={description} footer={false}>
   {/*
-    From tablet up the tool sits in the page column as a framed panel: its left
-    edge lines up with the wordmark, and its own background reads as the tool's
-    surface instead of butting against the white header. Phones get it
-    full-width, since the column's gutters would only cost the tool room.
+    The tool should read as the page itself, not a box on it: no frame, no
+    second scrollbar. Each tool runs a small embed script (a copy lives in each
+    tool's source, marked "Data Mixtape embed") that reports its height, and the
+    iframe grows to fit so the whole page scrolls as one. In return this page
+    tells the tool how much of it is on screen, which it uses for screens that
+    fill the window (Blind Board's draft table) and for anything pinned to the
+    bottom. A tool without the script still works — it just scrolls inside.
+
+    From tablet up the tool sits in the 68rem page column, so its own padding
+    lines its content up with the wordmark. Phones get it full-width.
   */}
   <div class="tool-wrap">
     <iframe {src} {title} class="tool-frame" allow="clipboard-write"></iframe>
   </div>
 </Base>
 
+<script>
+  const frame = document.querySelector<HTMLIFrameElement>('.tool-frame')!;
+  const origin = new URL(frame.src).origin;
+
+  // What part of the tool is on screen, and how tall a "full screen" is for it.
+  const sendViewport = () => {
+    const r = frame.getBoundingClientRect();
+    const top = Math.max(0, -r.top);
+    frame.contentWindow?.postMessage(
+      {
+        type: 'dm:viewport',
+        top,
+        height: Math.max(0, Math.min(innerHeight, r.bottom) - Math.max(0, r.top)),
+        avail: Math.round(innerHeight - (r.top + scrollY)),
+      },
+      origin,
+    );
+  };
+
+  let queued = false;
+  const queue = () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => {
+      queued = false;
+      sendViewport();
+    });
+  };
+
+  addEventListener('message', (e) => {
+    if (e.source !== frame.contentWindow || !e.data?.type) return;
+    const d = e.data;
+    if (d.type === 'dm:height' && d.height > 0) {
+      frame.style.height = `${d.height}px`;
+      frame.classList.add('sized');
+      queue();
+    } else if (d.type === 'dm:ready') {
+      sendViewport();
+    } else if (d.type === 'dm:nav') {
+      // The tool changed screens; a real page would start at the top.
+      scrollTo(0, 0);
+    }
+  });
+  addEventListener('scroll', queue, { passive: true });
+  addEventListener('resize', queue);
+  frame.addEventListener('load', sendViewport);
+</script>
+
 <style>
-  /* --header-h lives in global.css. */
+  /* --header-h lives in global.css. Until the tool reports its height (or if
+     it never does), fill the window below the header and let it scroll. */
   .tool-frame {
     display: block;
     width: 100%;
     height: calc(100svh - var(--header-h));
     border: none;
   }
+  .tool-frame.sized {
+    overflow: hidden;
+  }
 
   @media (min-width: 768px) {
     .tool-wrap {
       margin-inline: auto;
       max-width: 68rem;
-      padding: 1.5rem 1.5rem 0;
-    }
-    .tool-frame {
-      height: calc(100svh - var(--header-h) - 3rem);
-      border: 1px solid var(--color-rule);
-      border-radius: 0.5rem;
     }
   }
 </style>
