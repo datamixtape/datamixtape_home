@@ -1,0 +1,367 @@
+---
+/**
+ * A Blind Board prospect card for posts: anonymous stats on the front, the
+ * reveal on the back. Click / tap / Enter / Space flips it.
+ *
+ *   <FlipCard id="2018_jalen_brunson" label="Player A" />
+ *
+ * Data comes from src/data/flipcards.json (see scripts/flipcards.mjs). Photos
+ * load from the live Blind Board rather than living in this public repo.
+ */
+import cards from '../data/flipcards.json';
+
+interface Props {
+  id: string;
+  /** Front-side name. */
+  label?: string;
+  /** Optional line under the label, e.g. "2018 draft class". */
+  hint?: string;
+}
+
+const { id, label = 'Player A', hint } = Astro.props;
+const p = (cards as Record<string, any>)[id];
+if (!p) throw new Error(`FlipCard: "${id}" is not in src/data/flipcards.json`);
+
+const PHOTO_BASE = 'https://the-blind-board.vercel.app/photos/';
+
+const one = (v: number | null) => (v == null ? '–' : v.toFixed(1));
+const pct = (v: number | null) => (v == null ? '–' : (v * 100).toFixed(1));
+const madeAtt = (m: number | null, a: number | null) =>
+  m == null || a == null ? '–' : `${m.toFixed(1)}-${a.toFixed(1)}`;
+const wing = (v: number | null) => {
+  if (v == null) return '–';
+  const ft = Math.floor(v / 12);
+  return `${ft}-${+(v - ft * 12).toFixed(2)}`;
+};
+
+const measures = [
+  ['HT', p.height ?? '–'],
+  ['WT', p.weight == null ? '–' : String(Math.round(p.weight))],
+  ['WING', wing(p.wingspanInches)],
+  ['AGE', p.draftAgeLabel ?? '–'],
+];
+
+// Paired so each shooting split lands on one row, as in the daily challenge.
+const stats = [
+  ['PTS', one(p.ppg)],
+  ['BPM', one(p.collegeBPM)],
+  ['FG', madeAtt(p.fgm, p.fga)],
+  ['FG%', pct(p.fgPct)],
+  ['3PT', madeAtt(p.threePM, p.threePA)],
+  ['3P%', pct(p.threePPct)],
+  ['FT', madeAtt(p.ftm, p.fta)],
+  ['FT%', pct(p.ftPct)],
+  ['REB', one(p.trb)],
+  ['AST', one(p.apg)],
+  ['STL', one(p.spg)],
+  ['BLK', one(p.bpg)],
+  ['TO', one(p.tov)],
+  ['SOS', p.sosRank == null ? '–' : `#${p.sosRank}`],
+];
+
+const drafted = p.draftPick != null ? `Pick ${p.draftPick}, ${p.draftYear}` : `Undrafted, ${p.draftYear}`;
+const career =
+  p.nbaGames ? `${p.nbaYears} ${p.nbaYears === 1 ? 'season' : 'seasons'} · ${p.nbaGames} games` : 'No NBA games';
+---
+
+<button type="button" class="flip" data-flip aria-pressed="false" aria-label={`${label}: show who it was`}>
+  <span class="flip-inner">
+    <span class="face front">
+      <span class="top">
+        <span class="photo mystery" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><circle cx="32" cy="25" r="11" /><path d="M11 62c0-13 9.4-21 21-21s21 8 21 21" /></svg>
+        </span>
+        <span class="label">{label}</span>
+        {hint && <span class="hint">{hint}</span>}
+      </span>
+
+      <span class="measures">
+        {
+          measures.map(([k, v]) => (
+            <span class="m">
+              <span class="k">{k}</span>
+              <span class="v">{v}</span>
+            </span>
+          ))
+        }
+      </span>
+
+      <span class="grid">
+        {
+          stats.map(([k, v]) => (
+            <span class="row">
+              <span class="k">{k}</span>
+              <span class="v">{v}</span>
+            </span>
+          ))
+        }
+      </span>
+
+      <span class="cue">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9M13.5 2v3h-3" /></svg>
+        <span><span class="click">Click</span><span class="tap">Tap</span> to reveal</span>
+      </span>
+    </span>
+
+    <span class="face back" aria-hidden="true">
+      <span class="top">
+        <span class="photo">
+          {
+            p.photoFilename && (
+              <img src={PHOTO_BASE + p.photoFilename} alt="" loading="lazy" onerror="this.remove()" />
+            )
+          }
+        </span>
+        <span class="name">{p.name}</span>
+        <span class="meta">{p.college}</span>
+        <span class="meta">{drafted}</span>
+      </span>
+
+      <span class="verdict">
+        <span class="big">{one(p.careerWS)}</span>
+        <span class="ws">Career Win Shares</span>
+        <span class="meta">{career}</span>
+      </span>
+
+      <span class="cue">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9M13.5 2v3h-3" /></svg>
+        Flip back
+      </span>
+    </span>
+  </span>
+</button>
+
+<script>
+  for (const card of document.querySelectorAll<HTMLButtonElement>('[data-flip]')) {
+    const [front, back] = card.querySelectorAll<HTMLElement>('.face');
+    card.addEventListener('click', () => {
+      const on = card.getAttribute('aria-pressed') !== 'true';
+      card.setAttribute('aria-pressed', String(on));
+      front.setAttribute('aria-hidden', String(on));
+      back.setAttribute('aria-hidden', String(!on));
+    });
+  }
+</script>
+
+<style>
+  .flip {
+    --bb: #1f3a2b; /* Blind Board forest */
+    display: block;
+    width: 100%;
+    max-width: 21rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: var(--color-ink);
+    text-align: left;
+    cursor: pointer;
+    perspective: 1200px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .flip-inner {
+    display: grid; /* both faces share one cell, so the card is as tall as the taller face */
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.3, 0.7, 0.2, 1);
+  }
+  .flip[aria-pressed='true'] .flip-inner {
+    transform: rotateY(180deg);
+  }
+  .face {
+    grid-area: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.25rem;
+    border: 1px solid var(--color-rule-strong);
+    border-radius: 0.5rem;
+    background: var(--color-paper);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: border-color 0.15s;
+  }
+  .back {
+    transform: rotateY(180deg);
+    border-color: var(--bb);
+  }
+  .flip:hover .front {
+    border-color: var(--color-ink-muted);
+  }
+  .flip:focus-visible {
+    outline: none;
+  }
+  .flip:focus-visible .face {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 3px;
+  }
+
+  .top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    text-align: center;
+  }
+  .label {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    color: var(--bb);
+  }
+  .hint,
+  .meta {
+    font-size: 0.8125rem;
+    color: var(--color-ink-muted);
+  }
+  .k {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--color-ink-muted);
+  }
+  .v {
+    font-variant-numeric: tabular-nums;
+    color: var(--color-ink);
+  }
+
+  /* Measurements and stats run edge to edge; the card's padding moves inside them. */
+  .measures {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-inline: -1.25rem;
+    padding: 0.7rem 1.25rem;
+    border-block: 1px solid var(--color-rule);
+    background: var(--color-paper-raised);
+  }
+  .m {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+    font-size: 0.9375rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-inline: -1.25rem;
+    margin-top: -1rem; /* sit flush under the measurements band */
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.2rem 0;
+    border-bottom: 1px solid var(--color-rule);
+  }
+  .row:nth-child(odd) {
+    padding-inline: 1.25rem 0.75rem;
+    border-right: 1px solid var(--color-rule);
+  }
+  .row:nth-child(even) {
+    padding-inline: 0.75rem 1.25rem;
+  }
+
+  .cue {
+    margin-top: auto; /* pinned to the bottom when the other face is taller */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-ink-soft);
+  }
+  .cue svg {
+    width: 0.9rem;
+    height: 0.9rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Same size and spot on both faces, so the reveal fills in the outline. */
+  .photo {
+    display: grid;
+    place-items: center;
+    width: 6.5rem;
+    aspect-ratio: 1;
+    margin-bottom: 0.6rem;
+    overflow: hidden;
+    border: 1px solid var(--color-rule);
+    border-radius: 50%;
+    background: var(--color-paper-raised);
+  }
+  .mystery svg {
+    width: 72%;
+    margin-top: 18%;
+    fill: none;
+    stroke: var(--color-ink-muted);
+    stroke-width: 1.75;
+    stroke-linecap: round;
+  }
+  .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+  .name {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    color: var(--bb);
+    text-wrap: balance;
+  }
+  .verdict {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    margin-inline: -1.25rem;
+    padding: 1rem 1.25rem 0;
+    border-top: 1px solid var(--color-rule);
+    text-align: center;
+  }
+  .ws {
+    margin-top: 0.2rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-ink-soft);
+  }
+  .big {
+    font-family: var(--font-display);
+    font-size: 2.75rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-ink);
+  }
+
+  .tap {
+    display: none;
+  }
+  @media (hover: none) {
+    .click {
+      display: none;
+    }
+    .tap {
+      display: inline;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .flip-inner {
+      transition: none;
+    }
+  }
+</style>
