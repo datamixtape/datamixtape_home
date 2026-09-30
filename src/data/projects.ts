@@ -61,7 +61,7 @@ export const projects: Project[] = [
     slug: 'blind-board',
     name: 'The Blind Board',
     blurb:
-      'Mock-draft NBA prospects with the names stripped off. Pick on the numbers, then find out who you took.',
+      'Replay real NBA drafts with the names stripped off. Pick on the numbers, then find out who you took.',
     pitch:
       'Every prospect from 2010 to 2026, anonymized — no names, no photos, no schools you recognize. ' +
       'You get college production, measurements, and how good their team actually was, and you draft ' +
