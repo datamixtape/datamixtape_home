@@ -138,7 +138,7 @@ the hub last. All Vercel projects are in the same team (`team_DwrC…`).
   rewriting after it is messy (see step 3 below).
 - Drafts (e.g. `flip-card-demo.mdx`) only render under `astro dev`, so they
   won't ship.
-- `blind-board-intro.mdx` (draft) embeds `the-blind-board.vercel.app/preview`,
+- `blind-board-intro.mdx` (draft) embeds `the-blind-board.vercel.app/preview` and `/preview/daily`,
   which only exists once step 1 ships. Publishing it (`draft: false`) also needs
   `hello@datamixtape.com` to route, since the post links to it.
 
