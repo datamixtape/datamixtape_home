@@ -104,8 +104,6 @@ pages already act as the complete index.
   `date`, `kind`, optional `project` (a slug from `data/projects.ts`) and
   `draft`. `kind` outside the three values fails the build on purpose.
 - `draft: true` hides a post from the listing, the routes, and RSS.
-  `src/content/blog/example-draft.mdx` is the frontmatter reference — delete it
-  once real posts exist.
 - Light mode only.
 
 ## What's done
@@ -136,8 +134,7 @@ the hub last. All Vercel projects are in the same team (`team_DwrC…`).
 - Every commit here is authored `placeholder@users.noreply.github.com`. Fine for
   a public repo as-is (it hides identity), but decide before the push, because
   rewriting after it is messy (see step 3 below).
-- Drafts (e.g. `flip-card-demo.mdx`) only render under `astro dev`, so they
-  won't ship.
+- Drafts only render under `astro dev`, so they won't ship.
 - `blind-board-intro.mdx` (draft) embeds `the-blind-board.vercel.app/preview` and `/preview/daily`,
   which only exists once step 1 ships. Publishing it (`draft: false`) also needs
   `hello@datamixtape.com` to route, since the post links to it.
