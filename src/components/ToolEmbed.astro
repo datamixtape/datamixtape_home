@@ -6,7 +6,7 @@
  *     src="https://the-blind-board.vercel.app/preview?year=2023&pick=8&rows=10"
  *     devSrc="http://localhost:5173/preview?year=2023&pick=8&rows=10" />
  *
- * Breaks out of the reading width. The tool's embed script reports its height
+ * Sits in the reading width (wide tools scroll sideways inside). The tool's embed script reports its height
  * (dm:height) and the frame grows to fit, so nothing scrolls inside it.
  */
 interface Props {
@@ -22,7 +22,7 @@ const { title, devSrc, height = 560 } = Astro.props;
 const src = import.meta.env.DEV && devSrc ? devSrc : Astro.props.src;
 ---
 
-<div class="tool-embed not-prose max-w-none">
+<div class="tool-embed not-prose">
   <iframe {src} {title} loading="lazy" style={`height:${height}px`} data-tool-embed></iframe>
 </div>
 
