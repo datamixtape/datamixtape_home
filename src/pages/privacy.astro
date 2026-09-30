@@ -1,69 +1,117 @@
 ---
 import Base from '../layouts/Base.astro';
-import { SITE_NAME, CONTACT_EMAIL } from '../config';
+import { SITE_NAME, SITE_URL, CONTACT_EMAIL } from '../config';
 
 /*
-  Required by the email capture (NOTES.md §7). Review this if analytics or an
-  email provider get added — both change what's true below.
+  Privacy policy + terms of use. Review this when analytics, an email provider,
+  or a new third-party service gets added — each changes what's true below.
 */
-const updated = 'July 2026';
+const updated = 'September 2026';
+const email = `mailto:${CONTACT_EMAIL}`;
 ---
 
 <Base
-  title="Privacy"
-  description={`What ${SITE_NAME} collects, which is almost nothing.`}
+  title="Privacy & terms"
+  description={`What ${SITE_NAME} collects (almost nothing) and how you can use what's here.`}
 >
   <article class="pt-14 pb-8 sm:pt-20">
     <header class="wrap-prose">
-      <h1 class="text-[2.25rem] sm:text-[3rem]">Privacy</h1>
+      <h1 class="text-[2.25rem] sm:text-[3rem]">Privacy &amp; terms</h1>
       <p class="mt-5 text-lg leading-relaxed text-ink-soft">
-        Short, because there isn't much to say.
+        The short version: nothing here tracks you, your email is only used to email
+        you, and you're welcome to share what you find with credit, just not to make
+        money from it.
       </p>
       <hr class="mt-8 border-rule" />
     </header>
 
     <div class="wrap-prose prose-note mt-8">
-      <h2>Accounts</h2>
+      <h2>Privacy</h2>
+
+      <h3>Your email</h3>
       <p>
-        There are none. Nothing on this site requires signing in, and no personal
-        profile is created or stored.
+        If you sign up for updates, your email address is used for one thing: sending
+        you updates from {SITE_NAME}. It is never sold, rented, traded or shared with
+        anyone else. It's kept by the email service that sends the updates and nowhere
+        else. Every email has an unsubscribe link, and unsubscribing removes you. You
+        can also ask to be removed at <a href={email}>{CONTACT_EMAIL}</a>.
       </p>
 
-      <h2>The email list</h2>
+      <h3>What isn't collected</h3>
       <p>
-        If you subscribe, your email address is stored by the newsletter provider for
-        the sole purpose of sending you posts. It is never sold, rented, or shared.
-        Every email includes an unsubscribe link, and unsubscribing deletes the
-        address. You can also ask to be removed by writing to
-        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+        There are no accounts or logins. No cookies are set, and there are no ads, ad
+        trackers or data brokers. Nothing about you is sold, because nothing about you
+        is kept.
       </p>
 
-      <h2>Analytics</h2>
+      <h3>The games and maps</h3>
       <p>
-        Aggregate page-view counts may be collected to see which things people
-        actually use. No cookies are set for this, and no attempt is made to identify
-        or track individual visitors across sites.
+        They run in your browser. Your picks, filters and scores aren't sent anywhere.
+        A few of them save progress (a daily streak, say) in your browser's local
+        storage, on your own device. Clearing your browser data erases it.
       </p>
 
-      <h2>The games and maps</h2>
+      <h3>Hosting and outside services</h3>
       <p>
-        They run entirely in your browser. Your picks, filters, and progress stay on
-        your device and are never transmitted anywhere. Some of them save your
-        progress in your browser's local storage, which you can clear at any time.
+        The site's host keeps standard server logs, including IP addresses, for
+        security and to prevent abuse. Some tools load fonts or code libraries from
+        outside services such as Google Fonts, which see an ordinary web request from
+        your browser. Links to other sites are covered by those sites' own policies.
       </p>
 
-      <h2>Third parties</h2>
+      <h2>Terms of use</h2>
+
+      <h3>Sharing what's here</h3>
       <p>
-        The site is served by a hosting provider that keeps standard server logs,
-        including IP addresses, for security and abuse prevention. Fonts are served
-        from this domain, not from a third party.
+        The writing, charts, maps and graphics on {SITE_NAME} are free to share and
+        adapt for non-commercial purposes, as long as you credit{" "}
+        <a href={SITE_URL}>{SITE_NAME}</a> and link back to the page you used. This
+        follows the <a href="https://creativecommons.org/licenses/by-nc/4.0/"
+          >Creative Commons Attribution-NonCommercial 4.0</a
+        > license. No need to ask first. A credit line like this works:
+      </p>
+      <p class="credit">Source: {SITE_NAME} ({SITE_URL.replace('https://', '')})</p>
+      <p>
+        If you reuse a chart, please also name the data source it was built on.
+      </p>
+
+      <h3>No commercial use</h3>
+      <p>
+        You can't sell, license or otherwise make money from anything here, or use it
+        in advertising, without written permission. If you have something in mind,{" "}
+        <a href={email}>ask</a>.
+      </p>
+
+      <h3>Other people's data and images</h3>
+      <p>
+        The tools are built on data and images that belong to others: sports
+        statistics, player photos, public filings. Those aren't mine to license, and
+        the terms above don't cover them. Each tool's methods note names its sources,
+        and reusing that material means following their terms. Campaign-finance data
+        from the Federal Election Commission, for example, can't be used to solicit
+        contributions or for any commercial purpose.
+      </p>
+
+      <h3>No guarantees</h3>
+      <p>
+        Everything here is provided as-is, for information and fun. The numbers are
+        checked, but errors happen. Don't rely on them for financial, legal or betting
+        decisions. If you find a mistake, <a href={email}>let me know</a>.
       </p>
 
       <h2>Changes</h2>
       <p>
-        Last updated {updated}. If this policy changes in a way that matters, the
-        change will be noted here.
+        Last updated {updated}. If any of this changes in a way that matters, it'll be
+        noted here.
       </p>
     </div>
   </article>
 </Base>
+
+<style>
+  .credit {
+    padding: 0.6rem 0.9rem;
+    border-left: 2px solid var(--color-rule);
+    font-variant-numeric: tabular-nums;
+  }
+</style>
