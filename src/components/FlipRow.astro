@@ -1,13 +1,13 @@
 ---
-/** Lays FlipCards side by side in a post; stacks them on phones. */
+/** Lays FlipCards side by side in a post (breaking out of the reading width, so three fit); stacks them on phones. */
 ---
 
-<div class="flip-row not-prose"><slot /></div>
+<div class="flip-row not-prose max-w-none"><slot /></div>
 
 <style>
   .flip-row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 21rem));
     gap: 1rem;
     align-items: start;
   }

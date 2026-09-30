@@ -1,0 +1,46 @@
+---
+/**
+ * A live slice of a tool, inline in a post:
+ *
+ *   <ToolEmbed title="Blind Board, 2023 pick 8"
+ *     src="https://the-blind-board.vercel.app/preview?year=2023&pick=8&rows=10"
+ *     devSrc="http://localhost:5173/preview?year=2023&pick=8&rows=10" />
+ *
+ * Breaks out of the reading width. The tool's embed script reports its height
+ * (dm:height) and the frame grows to fit, so nothing scrolls inside it.
+ */
+interface Props {
+  title: string;
+  src: string;
+  /** Local build to embed instead under `astro dev`. */
+  devSrc?: string;
+  /** Height before the tool reports its own. */
+  height?: number;
+}
+
+const { title, devSrc, height = 560 } = Astro.props;
+const src = import.meta.env.DEV && devSrc ? devSrc : Astro.props.src;
+---
+
+<div class="tool-embed not-prose max-w-none">
+  <iframe {src} {title} loading="lazy" style={`height:${height}px`} data-tool-embed></iframe>
+</div>
+
+<script>
+  const frames = [...document.querySelectorAll<HTMLIFrameElement>('[data-tool-embed]')];
+  addEventListener('message', (e) => {
+    const frame = frames.find((f) => f.contentWindow === e.source);
+    if (frame && e.data?.type === 'dm:height' && e.data.height > 0) frame.style.height = `${e.data.height}px`;
+  });
+</script>
+
+<style>
+  .tool-embed {
+    margin-block: 2rem;
+  }
+  iframe {
+    display: block;
+    width: 100%;
+    border: 0;
+  }
+</style>

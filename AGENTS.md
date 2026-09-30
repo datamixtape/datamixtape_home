@@ -124,7 +124,7 @@ the hub last. All Vercel projects are in the same team (`team_DwrC…`).
 
 | # | What | Repo / branch | Unpushed commits | Ship with |
 |---|---|---|---|---|
-| 1 | Blind Board | `nba_draft` (private `blindboard`) `main` | a3c0c67 → 57a642e (7): re-theme, frame sizing, no header when embedded, prospect-card hero, settings panel, brand in draft bar | `cd nba_draft/app && npx vercel --prod` → the-blind-board.vercel.app |
+| 1 | Blind Board | `nba_draft` (private `blindboard`) `main` | a3c0c67 → HEAD (8): re-theme, frame sizing, no header when embedded, prospect-card hero, settings panel, brand in draft bar, `/preview` route (the blog post's embedded board) | `cd nba_draft/app && npx vercel --prod` → the-blind-board.vercel.app |
 | 2 | Heat Check | `nba_viz` (private `heatcheck`) `main` | f19bc16, 45fdf99: re-theme, embed script | rebuild (`build_lineup_compare.py` → `port_to_live.py`), then `cd design/site && npx vercel --prod` → heat-check-nba.vercel.app |
 | 3 | NIL Money Map | `NIL money` (private `nilmoney`) `main` | 3ccd61a, cdddf95: re-theme, embed script (ddcc33e = TNS compare script, repo-only) | `python3 build_map.py && cd prototype && npx vercel --prod` → nilredistribution.vercel.app. `prototype/` checked: no TNS data. TNS integration is **not** in this build (its decisions are still open) |
 | 4 | Where the Money Goes | `political_donation_map` — **not a git repo, no Vercel project** | — | Not in this deploy. Production hub redirects `/data/donor-map` → `/data` until it gets a repo + project |
@@ -138,6 +138,9 @@ the hub last. All Vercel projects are in the same team (`team_DwrC…`).
   rewriting after it is messy (see step 3 below).
 - Drafts (e.g. `flip-card-demo.mdx`) only render under `astro dev`, so they
   won't ship.
+- `blind-board-intro.mdx` (draft) embeds `the-blind-board.vercel.app/preview`,
+  which only exists once step 1 ships. Publishing it (`draft: false`) also needs
+  `hello@datamixtape.com` to route, since the post links to it.
 
 **Still to do before deploy (the user wants these in the same batch):** bigger
 page titles and trimmed explainer text on Heat Check, NIL and Where the Money Goes.
