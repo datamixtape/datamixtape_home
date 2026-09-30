@@ -142,6 +142,8 @@ the hub last. All Vercel projects are in the same team (`team_DwrC…`).
   which only exists once step 1 ships. Publishing it (`draft: false`) also needs
   `hello@datamixtape.com` to route, since the post links to it.
 
+**About page is empty** (placeholder text removed 2026-09-30) — it needs the user's text before the hub ships, or drop it from the nav.
+
 **Still to do before deploy (the user wants these in the same batch):** bigger
 page titles and trimmed explainer text on Heat Check, NIL and Where the Money Goes.
 
