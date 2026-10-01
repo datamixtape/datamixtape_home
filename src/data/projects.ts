@@ -129,7 +129,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'donor-map',
-    name: 'Where the Money Goes',
+    name: 'Political Donor Map',
     blurb:
       "Political money that crosses state lines — which states bankroll other states' races in 2026.",
     pitch:
@@ -139,9 +139,9 @@ export const projects: Project[] = [
       'to see where its money goes and where its candidates’ money comes from. Straight from FEC filings.',
     section: 'data',
     topic: 'Politics',
-    // Not deployed yet: live (embedded, linked) only under `astro dev`.
-    status: import.meta.env.DEV ? 'live' : 'built',
+    status: 'live',
     added: '2026-07-30',
+    href: 'https://political-donor-map.vercel.app',
     image: '/shots/donor-map.jpg',
     accent: '#6A5A99',
   },
