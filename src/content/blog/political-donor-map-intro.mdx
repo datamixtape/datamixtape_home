@@ -1,0 +1,66 @@
+---
+title: Introducing the Political Donor Map
+description: Who's paying for your state's races, and whose races is your state paying for?
+date: 2026-07-12
+kind: Notes
+project: donor-map
+draft: true
+---
+
+import ToolEmbed from '../../components/ToolEmbed.astro';
+import { CONTACT_EMAIL } from '../../config';
+
+A retiree in Oregon sends $50 to a Senate race in Vermont. A lawyer in Manhattan
+maxes out to a House candidate in Georgia. Add it all up and more than half a
+billion dollars in House and Senate donations has crossed a state line this
+cycle. That's the idea behind [the Political Donor Map](/data/donor-map): where
+does each state's political money go, and where does it come from?
+
+The raw totals are a little boring. California sends the most money to almost
+everyone, and California to New York ($9.4 million) is the biggest flow in the
+country. So the map compares every pair of states to the national pattern. If
+Montana gives Kentucky a bigger share of its out-of-state money than the rest of
+the country does, that line is green. If it gives less, it's red. The darker the
+line, the bigger the gap.
+
+Pick a state, then choose **Sends** to see where its donors' money goes or
+**Receives** to see where its candidates' money comes from. You can also look at
+just Democratic or Republican money, and switch between dollars and donors. The
+map opens on Alaska's Democratic candidates, who get 2.6 times more of their
+out-of-state money from Washington than the national pattern predicts.
+
+<ToolEmbed
+  title="The Political Donor Map"
+  src="https://political-donor-map.vercel.app"
+  devSrc="http://localhost:8125/flows.html"
+  height={1400}
+/>
+
+## Friends of Amy McGrath
+
+Part of the fun is finding the small, strange flows. Montana's Democratic money
+goes to Kentucky at 6.3 times the national rate. That's 17 Montanans, and 14 of
+them gave the $3,500 maximum to Amy McGrath's Senate campaign. Lots of McGrath
+friends in Montana!
+
+## Feeling the Bern in Alaska
+
+Alaska sends Vermont 3.1 times its expected share of Democratic money. That's 101
+Alaskans giving to Bernie Sanders, who the map counts with the Democrats. Oregon
+is right behind at 2.9 times, with more than 600 donors.
+
+## Next door
+
+The most lopsided pair in the country is Missouri to Kansas: almost 24 times the
+national pattern for Democratic money. That's Kansas City, which straddles the
+state line. Lots of pairs of neighbors look like this, which is why there's a
+**Hide neighboring states** button.
+
+## Most wanted
+
+Per resident, no state draws more out-of-state money than Maine, where candidates
+have taken in $11.52 for every person who lives there. Set the map to **All** and
+clear the state to see the full ranking at the bottom of the page.
+
+As always, <a href={`mailto:${CONTACT_EMAIL}`}>shoot me an email</a> if you find
+any errors.
