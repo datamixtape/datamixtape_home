@@ -1,7 +1,7 @@
 ---
 title: "New Data Exploration: Heat Check"
 description: Seeing how the game changes when lineups change
-date: 2026-07-26
+date: 2026-08-18
 kind: Notes
 project: heat-check
 draft: true
@@ -26,18 +26,18 @@ increased volume in Brunson's favorite spots near the elbows.
   title="Heat Check: Knicks, Brunson on vs. off"
   src="https://heat-check-nba.vercel.app/?view=post&side=off&aon=Brunson&boff=Brunson"
   devSrc="http://localhost:8124/?view=post&side=off&aon=Brunson&boff=Brunson"
-  height={520}
+  height={415}
 />
 
 There is less volume at the rim with Brunson on the court. But if we remove the
-Towns-without-Brunson minutes and Brunson-without-Towns minutes, the Brunson lineups (with KAT) now have more shots at the rim than the
-Brunson-less minutes.
+KAT-without-Brunson minutes and Brunson-without-KAT minutes, the Brunson lineups
+(with KAT) now have more shots at the rim than the Brunson-less minutes.
 
 <ToolEmbed
-  title="Heat Check: Knicks, Brunson and Towns on vs. both off"
+  title="Heat Check: Knicks, Brunson and KAT on vs. both off"
   src="https://heat-check-nba.vercel.app/?view=post&side=off&aon=Brunson,Towns&boff=Brunson,Towns"
   devSrc="http://localhost:8124/?view=post&side=off&aon=Brunson,Towns&boff=Brunson,Towns"
-  height={520}
+  height={415}
 />
 
 So how does Heat Check work? Pick any team and then choose a lineup by toggling any
@@ -48,6 +48,8 @@ comparison lineup that can be composed of players from the same team or differen
 teams. If you want to compare Spurs Wemby lineups to Spurs non-Wemby lineups or to
 Wolves Gobert lineups, you can do it. You can also compare to the league average
 lineup.
+
+![Heat Check's lineup controls: Spurs with Wembanyama on, compared to the Timberwolves with Gobert on](/blog/heat-check-controls.png)
 
 There are additional toggles for regular season and playoffs, date ranges, or
 specific opponents. That lets you compare Spurs Wemby lineups against the Nuggets
