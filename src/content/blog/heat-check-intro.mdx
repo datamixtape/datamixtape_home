@@ -10,41 +10,63 @@ draft: true
 import ToolEmbed from '../../components/ToolEmbed.astro';
 import { CONTACT_EMAIL } from '../../config';
 
-Every NBA fan has a theory about what one player does to their team. The offense
-gets stagnant when the point guard sits. Opponents stop attacking the rim when the
-big man is in.
-The shooters go cold without the star drawing attention. Some of those theories
-are right and some of them are just vibes, but the play-by-play can tell you which
-is which. That's the idea behind [Heat Check](/data/heat-check): Shot heatmaps for
-any NBA player or five-man lineup, on the floor or off it, on offense or defense.
+Every NBA fan has a theory about how their team performs when certain players are
+on the court. Some of them even have the data to back it up -- ORtgs, DRtgs, rim
+and 3PtA percentages. But wouldn't it be nice to visualize exactly what's
+happening -- which shots are being taken -- with any combination of players on the
+floor? [Heat Check](/data/heat-check) aims to answer that question with shot
+heatmaps for every team, with any combination of players on or off the court, for
+offense and defense.
 
-Pick a team and a lineup, then compare it to the league average or to a custom
-lineup of your own (the most useful one is usually the same team with that player
-on the bench). The map toggles between **Volume**, which shows where the shots come
-from, and **Accuracy**, which shows how often they go in. Hover over any zone for
-the numbers. It covers every team for the 2025-26 season, regular season and
-playoffs.
-
-The embedded map below opens on the Knicks with Jalen Brunson on the floor versus
-the Knicks with him on the bench. Look at the midrange: with Brunson playing, 13.2%
-of New York's shots come from midrange, and without him it's 8.2%. That's the
-fourth-biggest jump of any regular in the league.
+Take a look at the heat map below, which shows the frequency of Knicks field goal
+attempts last year with Brunson on the court vs. off the court. You can see the
+increased volume in Brunson's favorite spots near the elbows.
 
 <ToolEmbed
-  title="Heat Check"
-  src="https://heat-check-nba.vercel.app"
-  devSrc="http://localhost:8124"
-  height={1100}
+  title="Heat Check: Knicks, Brunson on vs. off"
+  src="https://heat-check-nba.vercel.app/?view=post&side=off&aon=Brunson&boff=Brunson"
+  devSrc="http://localhost:8124/?view=post&side=off&aon=Brunson&boff=Brunson"
+  height={520}
 />
 
-## Nobody drives on Jaren Jackson Jr.
+There is less volume at the rim with Brunson on the court, but that's only
+compared to Knicks lineups without him. If you compare to the league average,
+Brunson lineups are still generating more shots at the rim.
 
-Flip the map to defense and some players just make the rim disappear. With Jaren
-Jackson Jr. on the floor this season, 23.5% of Memphis's opponents' shots came at
-the rim. With him on the bench, 33.5%. That 10-point drop is the biggest in the
-league, ahead of Donovan Clingan (8.0) and well ahead of the usual suspects, Rudy
-Gobert (5.6) and Victor Wembanyama (4.9). Teams don't seem to want to find out
-what happens when they challenge him.
+<ToolEmbed
+  title="Heat Check: Knicks with Brunson vs. the league average"
+  src="https://heat-check-nba.vercel.app/?view=post&side=off&aon=Brunson&cmp=league"
+  devSrc="http://localhost:8124/?view=post&side=off&aon=Brunson&cmp=league"
+  height={520}
+/>
+
+In fact, if we remove the Towns-without-Brunson minutes and Brunson-without-Towns
+minutes, the Brunson lineups (with KAT) now have more shots at the rim than the
+Brunson-less minutes.
+
+<ToolEmbed
+  title="Heat Check: Knicks, Brunson and Towns on vs. both off"
+  src="https://heat-check-nba.vercel.app/?view=post&side=off&aon=Brunson,Towns&boff=Brunson,Towns"
+  devSrc="http://localhost:8124/?view=post&side=off&aon=Brunson,Towns&boff=Brunson,Towns"
+  height={520}
+/>
+
+So how does Heat Check work? Pick any team and then choose a lineup by toggling any
+players to be On or Off court. You can choose as many as five players to be on
+court, and you can leave players in as neither on nor off, which will calculate
+shot metrics based only on players on or off. Each lineup will then have a
+comparison lineup that can be composed of players from the same team or different
+teams. If you want to compare Spurs Wemby lineups to Spurs non-Wemby lineups or to
+Wolves Gobert lineups, you can do it. You can also compare to the league average
+lineup.
+
+There are additional toggles for regular season and playoffs, date ranges, or
+specific opponents. That lets you compare Spurs Wemby lineups against the Nuggets
+to Spurs Wemby lineups against OKC (beware of small sample sizes).
+
+The visualization defaults to shot volume, but you can also toggle to view shot
+accuracy from any part of the court. Hover over any zone for the specific
+percentages.
 
 Have fun exploring. And as always, <a href={`mailto:${CONTACT_EMAIL}`}>shoot me an
 email</a> if you find any errors.
