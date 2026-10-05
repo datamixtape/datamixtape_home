@@ -1,0 +1,50 @@
+---
+title: "New Data Exploration: Heat Check"
+description: What actually changes when a player checks in?
+date: 2026-07-26
+kind: Notes
+project: heat-check
+draft: true
+---
+
+import ToolEmbed from '../../components/ToolEmbed.astro';
+import { CONTACT_EMAIL } from '../../config';
+
+Every NBA fan has a theory about what one player does to their team. The offense
+gets stagnant when the point guard sits. Opponents stop attacking the rim when the
+big man is in.
+The shooters go cold without the star drawing attention. Some of those theories
+are right and some of them are just vibes, but the play-by-play can tell you which
+is which. That's the idea behind [Heat Check](/data/heat-check): Shot heatmaps for
+any NBA player or five-man lineup, on the floor or off it, on offense or defense.
+
+Pick a team and a lineup, then compare it to the league average or to a custom
+lineup of your own (the most useful one is usually the same team with that player
+on the bench). The map toggles between **Volume**, which shows where the shots come
+from, and **Accuracy**, which shows how often they go in. Hover over any zone for
+the numbers. It covers every team for the 2025-26 season, regular season and
+playoffs.
+
+The embedded map below opens on the Knicks with Jalen Brunson on the floor versus
+the Knicks with him on the bench. Look at the midrange: with Brunson playing, 13.2%
+of New York's shots come from midrange, and without him it's 8.2%. That's the
+fourth-biggest jump of any regular in the league.
+
+<ToolEmbed
+  title="Heat Check"
+  src="https://heat-check-nba.vercel.app"
+  devSrc="http://localhost:8124"
+  height={1100}
+/>
+
+## Nobody drives on Jaren Jackson Jr.
+
+Flip the map to defense and some players just make the rim disappear. With Jaren
+Jackson Jr. on the floor this season, 23.5% of Memphis's opponents' shots came at
+the rim. With him on the bench, 33.5%. That 10-point drop is the biggest in the
+league, ahead of Donovan Clingan (8.0) and well ahead of the usual suspects, Rudy
+Gobert (5.6) and Victor Wembanyama (4.9). Teams don't seem to want to find out
+what happens when they challenge him.
+
+Have fun exploring. And as always, <a href={`mailto:${CONTACT_EMAIL}`}>shoot me an
+email</a> if you find any errors.
