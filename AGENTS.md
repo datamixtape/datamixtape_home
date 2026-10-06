@@ -85,8 +85,9 @@ cards. The full tinted cards live on the section pages.
 to `data/projects.ts` with an `added` date, or drop an `.mdx` in
 `content/blog/`, and `lib/feed.ts` picks it up.
 
-⚠️ **The `added` dates are mostly made up.** Only `blind-board` (2026-06-27) is
-real. Fix the other four before deploy — they're displayed on the page.
+`added` dates: blind-board (2026-06-27), heat-check (2026-07-29) and nil-money
+(2026-09-18) are real, from each tool's first production deploy on Vercel.
+⚠️ donor-map and greenlight haven't shipped; set theirs to the day they do.
 
 When the feed gets long, cap it: `getFeed(20)` takes a limit, and the section
 pages already act as the complete index.
@@ -123,14 +124,14 @@ the hub last. All Vercel projects are in the same team (`team_DwrC…`).
 | # | What | Repo / branch | Unpushed commits | Ship with |
 |---|---|---|---|---|
 | 1 | Blind Board | `nba_draft` (private `blindboard`) `main` | a3c0c67 → HEAD (8): re-theme, frame sizing, no header when embedded, prospect-card hero, settings panel, brand in draft bar, `/preview` route (the blog post's embedded board) | `cd nba_draft/app && npx vercel --prod` → the-blind-board.vercel.app |
-| 2 | Heat Check | `nba_viz` (private `heatcheck`) `main` | f19bc16, 45fdf99, 198e549: re-theme, embed script, `?view=post` (the blog post's preset court embeds) | rebuild (`build_lineup_compare.py` → `port_to_live.py`), then `cd design/site && npx vercel --prod` → heat-check-nba.vercel.app |
-| 3 | NIL Money Map | `NIL money` (private `nilmoney`) `main` | 3ccd61a, cdddf95: re-theme, embed script (ddcc33e = TNS compare script, repo-only) | `python3 build_map.py && cd prototype && npx vercel --prod` → nilredistribution.vercel.app. `prototype/` checked: no TNS data. TNS integration is **not** in this build (its decisions are still open) |
+| 2 | Heat Check | `nba_viz` (private `heatcheck`) `main` | f19bc16, 45fdf99, 198e549, fc735df: re-theme, embed script, `?view=post` + URL lineup presets (the blog post's court embeds) | rebuild (`build_lineup_compare.py` → `port_to_live.py`), then `cd design/site && npx vercel --prod` → heat-check-nba.vercel.app |
+| 3 | NIL Money Map | `NIL money` (private `nilmoney`) `main` | 3ccd61a, cdddf95, 5c1fd9b, 0d640e9: re-theme, embed script, **TNS football valuations** (licensed; badge + credit in How this works), bigger title | `./build.sh` (needs the gitignored TNS CSV) then `cd prototype && npx vercel --prod` → nilredistribution.vercel.app. The deployed page now carries TNS per-player figures — that's the licensed use; never put it in a public repo |
 | 4 | Political Donor Map | `political_donation_map` — local git repo since 2026-10-01 (`main`, 467020b), **no GitHub remote, no Vercel project yet** | — | First deploy creates the project: `cd political_donation_map/prototype && npx vercel --prod`; `prototype/vercel.json` names it `political-donor-map` and rewrites `/` → `flows.html`. The hub embeds `https://political-donor-map.vercel.app` — if Vercel assigns a different URL, update `src/pages/data/donor-map.astro` + `projects.ts` before step 5. Any GitHub repo for it must be **private**; `data/` + `archive/` (12 GB raw FEC, itemized) are gitignored |
 | 5 | Hub | this repo, `local-full-site` → `main` (public `datamixtape_home`) | 16 ahead of `origin/main` (which is the "coming soon" placeholder) | merge into `main` + push (auto-deploys datamixtape.com), or `vercel --prod` |
 
 **Before step 5:**
-- Fix the made-up `added` dates in `data/projects.ts` (only Blind Board's is
-  real) — they show on the page.
+- Set donor-map's `added` date in `data/projects.ts` to its ship day (the
+  other live tools' dates are verified).
 - Every commit here is authored `placeholder@users.noreply.github.com`. Fine for
   a public repo as-is (it hides identity), but decide before the push, because
   rewriting after it is messy (see step 3 below).
@@ -142,7 +143,8 @@ the hub last. All Vercel projects are in the same team (`team_DwrC…`).
 **About page is empty** (placeholder text removed 2026-09-30) — it needs the user's text before the hub ships, or drop it from the nav.
 
 **Still to do before deploy (the user wants these in the same batch):** bigger
-page titles and trimmed explainer text on Heat Check, NIL and the Political Donor Map.
+page titles and trimmed explainer text on Heat Check and the Political Donor Map
+(NIL done in 0d640e9: 32px title, subtitle cut to "2026 NIL earnings by hometown").
 
 **Local "as-shipped" preview:** `:5173` serves the Blind Board *production
 build* (`/tmp/bb_serve.py`, SPA fallback) rather than Vite dev, so after any
@@ -174,7 +176,7 @@ the NIL / Heat Check / donor builds from `/tmp/*_dist`. Hub: `astro dev` on
    Cheap now, unpleasant after the history grows. Creating the GitHub account is
    a manual step — Claude can't create accounts.
 4. **Deploy to Vercel.** `vercel.json` is in place (`cleanUrls`, empty rewrites).
-5. **Correct the `added` dates** in `data/projects.ts` (four of five are guesses).
+5. ~~**Correct the `added` dates**~~ — done for the three shipped tools; donor-map and greenlight get theirs when they ship.
 6. **Real screenshots on the project cards** — currently text-only.
 7. **Phase 2:** path rewrites so the tools live on this domain (NOTES.md §4B).
    Needs `base: '/blind-board/'` in the Blind Board's vite config first.

@@ -31,8 +31,9 @@ export interface Project {
   status: ProjectStatus;
   /**
    * When it went up — orders the home feed and is shown on the entry.
-   * ⚠️ Only `blind-board` is a verified date. The rest are placeholders;
-   * correct them before deploy.
+   * Verified from first production deploys: blind-board, heat-check,
+   * nil-money. ⚠️ donor-map and greenlight haven't shipped — set theirs to
+   * the day they do.
    */
   added: string;
   /**
@@ -105,7 +106,7 @@ export const projects: Project[] = [
     section: 'data',
     topic: 'Sports',
     status: 'live',
-    added: '2026-06-10',
+    added: '2026-07-29',
     href: 'https://heat-check-nba.vercel.app',
     image: '/shots/heat-check.jpg',
     accent: '#C33B27',
@@ -114,7 +115,7 @@ export const projects: Project[] = [
     slug: 'nil-money',
     name: 'NIL Money Map',
     blurb:
-      'Where college sports money lands — $2.03B of it, mapped to the towns the players are from.',
+      'Where college sports NIL money lands — nearly $2B of it, mapped to the towns the players are from.',
     pitch:
       'NIL deals are usually counted by school. This counts them by hometown: every dollar in football and ' +
       "men's basketball placed on the map where the player grew up, not where they play. It is a different " +
@@ -122,7 +123,7 @@ export const projects: Project[] = [
     section: 'data',
     topic: 'Sports',
     status: 'live',
-    added: '2026-07-15',
+    added: '2026-09-18',
     href: 'https://nilredistribution.vercel.app',
     image: '/shots/nil-money.jpg',
     accent: '#9A7B1F',
