@@ -1,0 +1,78 @@
+---
+import { SECTIONS, projectPath, type Project } from '../data/projects';
+import { formatDate } from '../lib/posts';
+
+interface Props {
+  project: Project;
+  date: Date;
+  /** The newest tool: full width, photo left, big title. The rest sit three across under it. */
+  lead?: boolean;
+}
+
+const { project, date, lead = false } = Astro.props;
+---
+
+<a
+  href={projectPath(project)}
+  class:list={[
+    'group block',
+    lead && 'grid items-center gap-5 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] md:gap-9',
+  ]}
+>
+  {
+    project.image && (
+      <img
+        src={project.image}
+        alt=""
+        loading={lead ? 'eager' : 'lazy'}
+        width="1400"
+        height="875"
+        class="aspect-[16/10] w-full rounded-md border border-rule object-cover object-top"
+      />
+    )
+  }
+
+  <div class:list={[!lead && 'mt-3']}>
+    <div class:list={['flex flex-wrap items-center gap-x-3 gap-y-1', lead ? 'text-sm' : 'text-xs']}>
+      <span class="font-medium tracking-wide" style={`color:${project.accent}`}>
+        {SECTIONS[project.section].heading} · {project.topic}
+      </span>
+      <time datetime={date.toISOString()} class="text-ink-muted">{formatDate(date)}</time>
+    </div>
+
+    <h2
+      class:list={[
+        'text-ink decoration-2 underline-offset-4 group-hover:underline',
+        lead ? 'mt-2 text-[2.5rem] leading-[1.02] md:text-[3.25rem]' : 'mt-1 text-[1.5rem] leading-tight',
+      ]}
+    >
+      {project.name}
+    </h2>
+
+    <p class:list={['text-ink-soft', lead ? 'mt-3 text-xl leading-snug' : 'mt-1 leading-snug']}>
+      {project.blurb}
+    </p>
+
+    {
+      lead && (
+        <span class="mt-5 inline-flex items-center gap-1.5 font-medium" style={`color:${project.accent}`}>
+          Open
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="transition-transform group-hover:translate-x-0.5"
+            aria-hidden="true"
+          >
+            <path d="M3 8h10M9 4l4 4-4 4" />
+          </svg>
+        </span>
+      )
+    }
+  </div>
+</a>

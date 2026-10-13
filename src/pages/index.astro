@@ -1,13 +1,17 @@
 ---
 import Base from '../layouts/Base.astro';
-import FeedEntry from '../components/FeedEntry.astro';
+import ToolCard from '../components/ToolCard.astro';
 import { getFeed } from '../lib/feed';
 import { SITE_NAME } from '../config';
 
 const feed = await getFeed();
 
-// Every live tool, newest first. The newest gets a slightly larger row; posts live on the blog page.
-const tools = feed.filter((e) => e.kind === 'project' && e.project.status === 'live');
+// Every live tool, newest first. The newest leads full width; the rest sit three
+// across beneath it. Posts live on the blog page.
+const tools = feed.flatMap((e) =>
+  e.kind === 'project' && e.project.status === 'live' ? [{ project: e.project, date: e.date }] : [],
+);
+const [newest, ...rest] = tools;
 ---
 
 <Base>
@@ -15,8 +19,16 @@ const tools = feed.filter((e) => e.kind === 'project' && e.project.status === 'l
   <h1 class="sr-only">{SITE_NAME}</h1>
 
   <div class="wrap pt-10">
-    <div class="max-w-[54rem]">
-      {tools.map((entry, i) => <FeedEntry entry={entry} lead={i === 0} />)}
-    </div>
+    {newest && <ToolCard {...newest} lead />}
+
+    {
+      rest.length > 0 && (
+        <div class="mt-10 grid gap-x-7 gap-y-10 border-t border-rule pt-8 sm:grid-cols-2 lg:grid-cols-3">
+          {rest.map((tool) => (
+            <ToolCard {...tool} />
+          ))}
+        </div>
+      )
+    }
   </div>
 </Base>
