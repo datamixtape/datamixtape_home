@@ -62,7 +62,7 @@ export const projects: Project[] = [
     slug: 'blind-board',
     name: 'The Blind Board',
     blurb:
-      'Replay real NBA drafts with the names stripped off. Pick on the numbers, then find out who you took.',
+      "What if video didn't exist and NBA teams had to draft on data alone?",
     pitch:
       'Every prospect from 2010 to 2026, anonymized — no names, no photos, no schools you recognize. ' +
       'You get college production, measurements, and how good their team actually was, and you draft ' +
@@ -97,7 +97,7 @@ export const projects: Project[] = [
     slug: 'heat-check',
     name: 'Heat Check',
     blurb:
-      'Shot heatmaps for any NBA lineup compared to any other NBA lineup',
+      'Seeing how the game changes when lineups change',
     pitch:
       'One court, every shot. Pick a player or build a lineup and see where they actually score from and ' +
       'where they let other teams score from, measured against the league or head-to-head against another ' +
@@ -115,7 +115,7 @@ export const projects: Project[] = [
     slug: 'nil-money',
     name: 'NIL Money Map',
     blurb:
-      'What kind of income redistribution is NIL driving?',
+      'Visualizing income redistribution from NIL money',
     pitch:
       'NIL deals are usually counted by school. This counts them by hometown: every football dollar at the ' +
       "Power 4 schools and Notre Dame, placed on the map where the player grew up, not where they play. It is a different " +
