@@ -9,6 +9,8 @@
  * Sits in the reading width (wide tools scroll sideways inside). The tool's embed script reports its height
  * (dm:height) and the frame grows to fit, so nothing scrolls inside it.
  */
+import { toolSrc } from '../lib/toolSrc';
+
 interface Props {
   title: string;
   src: string;
@@ -19,7 +21,7 @@ interface Props {
 }
 
 const { title, devSrc, height = 560 } = Astro.props;
-const src = import.meta.env.DEV && devSrc ? devSrc : Astro.props.src;
+const src = toolSrc(Astro.props.src, devSrc);
 ---
 
 <div class="tool-embed not-prose">

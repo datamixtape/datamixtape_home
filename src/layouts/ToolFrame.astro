@@ -1,5 +1,6 @@
 ---
 import Base from './Base.astro';
+import { toolSrc } from '../lib/toolSrc';
 
 interface Props {
   title: string;
@@ -11,7 +12,7 @@ interface Props {
 }
 
 const { title, description, devSrc } = Astro.props;
-const src = import.meta.env.DEV && devSrc ? devSrc : Astro.props.src;
+const src = toolSrc(Astro.props.src, devSrc);
 ---
 
 <Base title={title} description={description}>
