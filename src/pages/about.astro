@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { SITE_NAME } from '../config';
+import { SITE_NAME, CONTACT_EMAIL } from '../config';
 ---
 
 <Base title="About" description={`About ${SITE_NAME}.`}>
@@ -11,7 +11,10 @@ import { SITE_NAME } from '../config';
     </header>
 
     <div class="wrap-prose prose-note mt-8">
-      {/* About text goes here. */}
+      <p>
+        {SITE_NAME} is the personal project of data analytics professional Eric Horowitz.
+        Please reach out at <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+      </p>
     </div>
   </article>
 </Base>
