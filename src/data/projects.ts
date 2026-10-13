@@ -97,7 +97,7 @@ export const projects: Project[] = [
     slug: 'heat-check',
     name: 'Heat Check',
     blurb:
-      'Shot heatmaps for any NBA player or five-man lineup — offense, defense, on and off.',
+      'Shot heatmaps for any NBA lineup compared to any other NBA lineup',
     pitch:
       'One court, every shot. Pick a player or build a lineup and see where they actually score from and ' +
       'where they let other teams score from, measured against the league or head-to-head against another ' +
@@ -132,7 +132,7 @@ export const projects: Project[] = [
     slug: 'donor-map',
     name: 'Political Donor Map',
     blurb:
-      "Political money that crosses state lines — which states bankroll other states' races in 2026.",
+      'Where do political donors like to send their money?',
     pitch:
       'Every 2026 individual donation to a federal candidate, traced from the state the donor lives in ' +
       'to the state of the race. Each pair is scored against the national pattern, so a big state ' +
