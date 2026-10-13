@@ -14,7 +14,7 @@ const { title, description, devSrc } = Astro.props;
 const src = import.meta.env.DEV && devSrc ? devSrc : Astro.props.src;
 ---
 
-<Base title={title} description={description} footer={false}>
+<Base title={title} description={description}>
   {/*
     The tool should read as the page itself, not a box on it: no frame, no
     second scrollbar. Each tool runs a small embed script (a copy lives in each
