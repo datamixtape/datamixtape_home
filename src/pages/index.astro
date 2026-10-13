@@ -2,61 +2,22 @@
 import Base from '../layouts/Base.astro';
 import FeedEntry from '../components/FeedEntry.astro';
 import { getFeed } from '../lib/feed';
-import { projects, STATUS_LABEL } from '../data/projects';
 import { SITE_NAME } from '../config';
 
 const feed = await getFeed();
 
-// Every live tool, newest first, all the same size. Posts live on the blog page;
-// unfinished tools wait in the sidebar.
+// Every live tool, newest first, all the same size. Posts live on the blog page.
 const tools = feed.filter((e) => e.kind === 'project' && e.project.status === 'live');
-const upcoming = projects
-  .filter((p) => p.status !== 'live')
-  .sort((a, b) => b.added.localeCompare(a.added));
 ---
 
 <Base>
   {/* The header already names the site; the h1 is for screen readers and search. */}
   <h1 class="sr-only">{SITE_NAME}</h1>
 
-  <div class="wrap">
-    <div class="grid gap-12 pt-9 lg:grid-cols-[minmax(0,1fr)_18.5rem] lg:gap-14">
-      <div>
-        <h2 class="mb-7 font-sans text-xs font-bold tracking-[0.1em] text-ink-muted uppercase">
-          All tools
-        </h2>
-        <div>{tools.map((entry) => <FeedEntry entry={entry} />)}</div>
-      </div>
-
-      <aside class="flex flex-col gap-9">
-        {
-          upcoming.length > 0 && (
-            <section>
-              <h2 class="font-sans text-xs font-bold tracking-[0.1em] text-ink-muted uppercase">
-                Coming soon
-              </h2>
-              <ul class="mt-2">
-                {upcoming.map((p) => (
-                  <li class="border-b border-rule py-3.5">
-                    <a href={`/${p.section}`} class="group/soon block">
-                      <div class="flex items-center gap-2">
-                        <span class="size-2.5 flex-none rounded-full" style={`background:${p.accent}`} />
-                        <span class="font-display text-[1.0625rem] font-bold tracking-[-0.01em] text-ink group-hover/soon:underline">
-                          {p.name}
-                        </span>
-                        <span class="ml-auto rounded-full border border-rule px-2 py-px text-[0.6875rem] whitespace-nowrap text-ink-muted">
-                          {STATUS_LABEL[p.status]}
-                        </span>
-                      </div>
-                      <p class="mt-1 ml-[1.125rem] text-[0.84rem] leading-snug text-ink-soft">{p.blurb}</p>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
-      </aside>
-    </div>
+  <div class="wrap pt-9">
+    <h2 class="mb-7 font-sans text-xs font-bold tracking-[0.1em] text-ink-muted uppercase">
+      All tools
+    </h2>
+    <div class="max-w-[54rem]">{tools.map((entry) => <FeedEntry entry={entry} />)}</div>
   </div>
 </Base>
