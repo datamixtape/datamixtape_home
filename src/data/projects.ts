@@ -115,7 +115,7 @@ export const projects: Project[] = [
     slug: 'nil-money',
     name: 'NIL Money Map',
     blurb:
-      "Where college football's NIL money lands — $1.5B+ of it, mapped to the towns the players are from.",
+      'What kind of income redistribution is NIL driving?',
     pitch:
       'NIL deals are usually counted by school. This counts them by hometown: every football dollar at the ' +
       "Power 4 schools and Notre Dame, placed on the map where the player grew up, not where they play. It is a different " +
