@@ -1,27 +1,18 @@
 ---
 import Base from '../layouts/Base.astro';
 import FeedEntry from '../components/FeedEntry.astro';
-import EmailCapture from '../components/EmailCapture.astro';
 import { getFeed } from '../lib/feed';
-import { projects, projectPath, SECTIONS, STATUS_LABEL } from '../data/projects';
-import { formatDate } from '../lib/posts';
+import { projects, STATUS_LABEL } from '../data/projects';
 import { SITE_NAME } from '../config';
 
 const feed = await getFeed();
 
-/*
-  The newest live tool with a screenshot gets the top slot; everything else
-  that's out (tools and posts) runs below it, newest first. Unfinished tools
-  wait in the sidebar instead of taking a full entry.
-*/
-const featured = feed.find((e) => e.kind === 'project' && e.project.status === 'live' && e.project.image);
-const rest = feed.filter(
-  (e) => e !== featured && (e.kind === 'post' || e.project.status === 'live')
-);
+// Every live tool, newest first, all the same size. Posts live on the blog page;
+// unfinished tools wait in the sidebar.
+const tools = feed.filter((e) => e.kind === 'project' && e.project.status === 'live');
 const upcoming = projects
   .filter((p) => p.status !== 'live')
   .sort((a, b) => b.added.localeCompare(a.added));
-const f = featured?.kind === 'project' ? featured.project : null;
 ---
 
 <Base>
@@ -29,57 +20,15 @@ const f = featured?.kind === 'project' ? featured.project : null;
   <h1 class="sr-only">{SITE_NAME}</h1>
 
   <div class="wrap">
-    {
-      f && (
-        <section class="group relative grid items-center gap-6 border-b border-rule py-10 md:grid-cols-[1.45fr_1fr] md:gap-10">
-          <img
-            src={f.image}
-            alt=""
-            width="1400"
-            height="875"
-            class="aspect-[16/10] w-full rounded-lg border border-rule object-cover object-top"
-          />
-          <div>
-            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
-              <span class="rounded-[3px] bg-ink px-1.5 py-0.5 text-[0.6875rem] font-semibold tracking-[0.08em] text-paper uppercase">
-                New
-              </span>
-              <span class="font-medium tracking-wide" style={`color:${f.accent}`}>
-                {SECTIONS[f.section].heading} · {f.topic}
-              </span>
-              <time datetime={featured!.date.toISOString()} class="text-ink-muted">
-                {formatDate(featured!.date)}
-              </time>
-            </div>
-            <h2 class="mt-3 text-[2.5rem] leading-[1.02] font-extrabold tracking-[-0.03em] sm:text-[2.9rem]">
-              <a href={projectPath(f)} class="text-ink">
-                {f.name}
-                <span class="absolute inset-0" aria-hidden="true" />
-              </a>
-            </h2>
-            <p class="mt-3.5 max-w-[42ch] text-[1.0625rem] leading-relaxed text-ink-soft">{f.blurb}</p>
-            <span class="mt-6 inline-flex items-center gap-2 rounded-md bg-ink px-4.5 py-2.5 text-[0.9375rem] font-semibold text-paper">
-              Open it
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-0.5" aria-hidden="true">
-                <path d="M3 8h10M9 4l4 4-4 4" />
-              </svg>
-            </span>
-          </div>
-        </section>
-      )
-    }
-
     <div class="grid gap-12 pt-9 lg:grid-cols-[minmax(0,1fr)_18.5rem] lg:gap-14">
       <div>
         <h2 class="mb-7 font-sans text-xs font-bold tracking-[0.1em] text-ink-muted uppercase">
           All tools
         </h2>
-        <div>{rest.map((entry) => <FeedEntry entry={entry} />)}</div>
+        <div>{tools.map((entry) => <FeedEntry entry={entry} />)}</div>
       </div>
 
       <aside class="flex flex-col gap-9">
-        <EmailCapture stacked />
-
         {
           upcoming.length > 0 && (
             <section>

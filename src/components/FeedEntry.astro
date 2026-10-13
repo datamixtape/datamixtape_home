@@ -74,7 +74,8 @@ const image = project?.image;
       </a>
     </h3>
 
-    <p class="mt-1.5 max-w-prose text-[0.9375rem] leading-relaxed text-ink-soft">
+    {/* Tool blurbs get the same three-line block so every row is the same height. */}
+    <p class:list={['mt-1.5 max-w-prose text-[0.9375rem] leading-relaxed text-ink-soft', project && 'min-h-[3lh] line-clamp-3']}>
       {body}
     </p>
 

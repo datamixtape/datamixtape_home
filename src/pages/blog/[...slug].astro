@@ -2,7 +2,6 @@
 import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import EmailCapture from '../../components/EmailCapture.astro';
 import { getPosts, formatDate } from '../../lib/posts';
 import { projects, projectPath } from '../../data/projects';
 
@@ -57,10 +56,6 @@ const project = projects.find((p) => p.slug === projectSlug);
   </article>
 
   <div class="wrap-prose mt-14">
-    <EmailCapture />
-  </div>
-
-  <div class="wrap-prose mt-8">
     <a href="/blog" class="text-sm text-ink-muted hover:text-ink">&larr; All posts</a>
   </div>
 </Base>
