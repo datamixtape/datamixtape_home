@@ -6,7 +6,7 @@ import { SITE_NAME } from '../config';
 
 const feed = await getFeed();
 
-// Every live tool, newest first, all the same size. Posts live on the blog page.
+// Every live tool, newest first. The newest gets a slightly larger row; posts live on the blog page.
 const tools = feed.filter((e) => e.kind === 'project' && e.project.status === 'live');
 ---
 
@@ -14,10 +14,9 @@ const tools = feed.filter((e) => e.kind === 'project' && e.project.status === 'l
   {/* The header already names the site; the h1 is for screen readers and search. */}
   <h1 class="sr-only">{SITE_NAME}</h1>
 
-  <div class="wrap pt-9">
-    <h2 class="mb-7 font-sans text-xs font-bold tracking-[0.1em] text-ink-muted uppercase">
-      All tools
-    </h2>
-    <div class="max-w-[54rem]">{tools.map((entry) => <FeedEntry entry={entry} />)}</div>
+  <div class="wrap pt-10">
+    <div class="max-w-[54rem]">
+      {tools.map((entry, i) => <FeedEntry entry={entry} lead={i === 0} />)}
+    </div>
   </div>
 </Base>

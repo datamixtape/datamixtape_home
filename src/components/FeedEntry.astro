@@ -5,9 +5,11 @@ import type { FeedEntry } from '../lib/feed';
 
 interface Props {
   entry: FeedEntry;
+  /** The newest tool on the home page: same layout, a step larger. */
+  lead?: boolean;
 }
 
-const { entry } = Astro.props;
+const { entry, lead = false } = Astro.props;
 const { date } = entry;
 
 /*
@@ -28,7 +30,8 @@ const image = project?.image;
 <article
   class:list={[
     'group relative border-b border-rule py-8 pl-5 first:pt-0',
-    image && 'grid items-center gap-5 sm:grid-cols-[minmax(0,1fr)_14.5rem] sm:gap-7',
+    image && 'grid items-center gap-5 sm:gap-7',
+    image && (lead ? 'sm:grid-cols-[minmax(0,1fr)_18rem]' : 'sm:grid-cols-[minmax(0,1fr)_14.5rem]'),
   ]}
 >
   {
@@ -64,7 +67,7 @@ const image = project?.image;
       <time datetime={date.toISOString()} class="text-ink-muted">{formatDate(date)}</time>
     </div>
 
-    <h3 class:list={['mt-2 leading-tight', project ? 'text-[1.75rem]' : 'text-[1.35rem]']}>
+    <h3 class:list={['mt-2 leading-tight', project ? (lead ? 'text-[2.125rem]' : 'text-[1.75rem]') : 'text-[1.35rem]']}>
       <a
         href={href}
         class="text-ink decoration-2 underline-offset-4 group-hover:underline"
@@ -75,7 +78,7 @@ const image = project?.image;
     </h3>
 
     {/* Tool blurbs get the same three-line block so every row is the same height. */}
-    <p class:list={['mt-1.5 max-w-prose text-[0.9375rem] leading-relaxed text-ink-soft', project && 'min-h-[3lh] line-clamp-3']}>
+    <p class:list={['mt-1.5 max-w-prose leading-relaxed text-ink-soft', lead ? 'text-[1.0625rem]' : 'text-[0.9375rem]', project && 'min-h-[3lh] line-clamp-3']}>
       {body}
     </p>
 
