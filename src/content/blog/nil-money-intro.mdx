@@ -1,0 +1,65 @@
+---
+title: "NIL Money Map: Where college football's money goes home"
+description: Visualizing income redistribution from NIL money
+date: 2026-10-06
+kind: Notes
+project: nil-money
+draft: false
+---
+
+import ToolEmbed from '../../components/ToolEmbed.astro';
+import { CONTACT_EMAIL } from '../../config';
+
+It seems unbelievable now, but for years most people accepted that college athletes
+didn't need to be paid. They claimed the athletes received scholarships worth
+hundreds of thousands of dollars and the opportunity to develop athletic skills that would earn them
+millions. Getting paid didn't matter since these athletes were already earning
+benefits that equaled what they deserved.
+
+Back then, some knew this was ridiculous. Today, everybody does. With the
+opportunity to earn a salary in a free market, star players are earning eight figures
+over a college career. Even backups might be millionaires by the time they've
+exhausted their five years of eligibility. When you take a step back, the NIL era is
+one of the most striking transfers of wealth in recent history. More than a billion
+dollars moving from wealthy car dealership owners (let's stereotype some NIL funders)
+to young men who largely come from middle- or low-income families.
+
+Unlike pro athletes, who likely live in the major cities where they play, college
+athletes are still closely connected to their hometowns. This makes it easy to imagine
+the flow of NIL money filtering back down to the places the athletes are from. A fun
+and interesting question then arises: Is NIL money drastically reshaping the income
+profiles of towns across the country?
+
+[The NIL Money Map](/data/nil-money) is an attempt to dive into this question. It
+aims to quantify how much athletes from each city or town are earning, and then
+compare that number to the total income of the town. Are there places where NIL
+money would, if counted in census data, meaningfully alter the median income?
+
+<ToolEmbed
+  title="The NIL Money Map"
+  src="https://nilredistribution.vercel.app/?view=post"
+  devSrc="http://localhost:8123/?view=post"
+  height={760}
+/>
+
+The map above can show results based on total NIL money or NIL money as a
+percentage of a place's total household income. You can also see results by town
+vs. county, and you can filter for different schools or conferences. It turns out
+&mdash; not surprisingly &mdash; that the places where NIL money appears most
+compelling tend to be very small, poor towns with a single highly paid athlete.
+Tiny Silver Creek, MS (population 175) is the hometown of Malcolm Hartzog Jr., a
+safety for Arizona who [The NIL Standard](https://thenilstandard.com) estimates is
+earning $333,000 this year. Given the town size and median household income of
+$36,875, Hartzog Jr.'s NIL earnings would increase the total income of the town's
+57 households by over 10%.
+
+The map can also reveal some fun facts about NIL money in big places. The top 3
+cities are not surprising &mdash; Atlanta, Houston, and Miami. But #4? Nashville,
+Tennessee, the unsung college football factory. At #7 is Ft. Lauderdale, which
+boasts the highest NIL income share of any top-10 city, with players receiving 0.13%
+of the town's total income in NIL money. Not to be outdone is Buford, GA. A town of 18,000 people, it
+has 24 college football players bringing home $6.1m, equal to more than 1% of the
+town's total income.
+
+Have fun exploring. As always, <a href={`mailto:${CONTACT_EMAIL}`}>shoot me an
+email</a> if you find any errors.

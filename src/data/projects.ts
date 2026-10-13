@@ -32,8 +32,8 @@ export interface Project {
   /**
    * When it went up — orders the home feed and is shown on the entry.
    * Verified from first production deploys: blind-board, heat-check,
-   * nil-money. ⚠️ donor-map and greenlight haven't shipped — set theirs to
-   * the day they do.
+   * nil-money, donor-map. ⚠️ greenlight hasn't shipped — set its date to
+   * the day it does.
    */
   added: string;
   /**
@@ -141,7 +141,7 @@ export const projects: Project[] = [
     section: 'data',
     topic: 'Politics',
     status: 'live',
-    added: '2026-07-30',
+    added: '2026-10-13',
     href: 'https://political-donor-map.vercel.app',
     image: '/shots/donor-map.jpg',
     accent: '#6A5A99',
